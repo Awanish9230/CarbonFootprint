@@ -5,7 +5,9 @@ import ChartCard from '../components/ChartCard';
 export default function Dashboard({ refreshKey }) {
   const [range, setRange] = useState('monthly');
   const [summary, setSummary] = useState(null);
-  const [recs, setRecs] = useState([]);
+  const [ruleRecs, setRuleRecs] = useState([]);
+  const [aiRecs, setAiRecs] = useState([]);
+  const [loadingRecs, setLoadingRecs] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -13,15 +15,19 @@ export default function Dashboard({ refreshKey }) {
       setSummary(s.data);
 
       const r = await api.get('/emissions/recommendations');
-      setRecs(r.data.recommendations || []);
+      const { ruleBased = [], aiBased = [] } = r.data || {};
+      setRuleRecs(ruleBased);
+      setAiRecs(aiBased);
+      setLoadingRecs(false);
     } catch (err) {
       console.error(err);
+      setLoadingRecs(false);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [range, refreshKey]); // Refetch on range change or new log
+  }, [range, refreshKey]);
 
   return (
     <div className="space-y-6 p-4">
@@ -45,7 +51,6 @@ export default function Dashboard({ refreshKey }) {
       {/* Chart */}
       {summary && <ChartCard data={summary.entries} range={range} />}
 
-
       {/* Breakdown */}
       {summary && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -62,16 +67,29 @@ export default function Dashboard({ refreshKey }) {
       )}
 
       {/* Recommendations */}
-      {recs.length > 0 && (
-        <div className="bg-[#111111] p-5 rounded-2xl border border-gray-800 shadow-md">
-          <h3 className="font-semibold text-blue-400 mb-2">
-            Recommendations to Reduce CO₂
-          </h3>
-          <ul className="list-disc list-inside space-y-1 text-white">
-            {recs.map((r, i) => (
-              <li key={i}>{r}</li>
-            ))}
-          </ul>
+      {loadingRecs ? (
+        <p className="text-white font-semibold">Loading recommendations...</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Rule-Based */}
+          {ruleRecs.length > 0 && (
+            <div className="bg-[#111111] p-5 rounded-2xl border border-gray-800 shadow-md">
+              <h3 className="font-semibold text-blue-400 mb-2">Rule-Based Suggestions</h3>
+              <ul className="list-disc list-inside space-y-1 text-white">
+                {ruleRecs.map((r, i) => <li key={i}>{r}</li>)}
+              </ul>
+            </div>
+          )}
+
+          {/* AI-Based */}
+          {aiRecs.length > 0 && (
+            <div className="bg-[#111111] p-5 rounded-2xl border border-gray-800 shadow-md">
+              <h3 className="font-semibold text-green-400 mb-2">AI-Powered Suggestions</h3>
+              <ul className="list-disc list-inside space-y-1 text-white">
+                {aiRecs.map((r, i) => <li key={i}>{r}</li>)}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>

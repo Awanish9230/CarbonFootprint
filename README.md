@@ -28,6 +28,20 @@ carbon-footprint-tracker/
    ├─ tailwind.config.js
    └─ vite.config.js
 ```
+# Run Instructions
+
+## Backend
+1. Open a terminal and go to the backend folder:
+ ```bash
+cd backend
+npm install
+npm run dev
+
+## Frontend
+cd frontend
+npm install
+npm run dev
+
 
 ## Prerequisites
 - Node.js 18+

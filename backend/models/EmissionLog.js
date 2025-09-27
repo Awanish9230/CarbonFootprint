@@ -6,7 +6,12 @@ const breakdownSchema = new mongoose.Schema(
     electricityKwh: { type: Number, default: 0 },
     shoppingSpend: { type: Number, default: 0 },
     foodKgCO2e: { type: Number, default: 0 },
-    other: { type: Number, default: 0 }
+    other: { type: Number, default: 0 },
+    
+    // --- New fields ---
+    flightsKm: { type: Number, default: 0 },
+    waterLiters: { type: Number, default: 0 },
+    wasteKg: { type: Number, default: 0 }
   },
   { _id: false }
 );

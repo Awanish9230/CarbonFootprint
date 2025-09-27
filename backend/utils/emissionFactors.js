@@ -12,5 +12,10 @@ module.exports = [
   { name: 'cycle_km', category: 'transport', unit: 'km', factor: 0.0 },
   { name: 'beef_kg', category: 'food', unit: 'kg', factor: 27.0 },
   { name: 'chicken_kg', category: 'food', unit: 'kg', factor: 6.9 },
-  { name: 'vegetables_kg', category: 'food', unit: 'kg', factor: 2.0 }
+  { name: 'vegetables_kg', category: 'food', unit: 'kg', factor: 2.0 },
+
+  // --- New categories ---
+  { name: 'flights_km', category: 'transport', unit: 'km', factor: 0.15 }, // avg short/medium flight
+  { name: 'water_liters', category: 'water', unit: 'liter', factor: 0.0003 }, // water usage
+  { name: 'waste_kg', category: 'waste', unit: 'kg', factor: 0.5 } // general waste
 ];

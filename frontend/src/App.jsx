@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Footer from './pages/Footer'
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Leaderboard from './pages/Leaderboard';
@@ -8,7 +9,7 @@ import Community from './pages/Community';
 import Profile from './pages/Profile';
 import LoginSignup from './pages/LoginSignup';
 import { useAuth } from './context/AuthContext';
-import Test from './pages/Test';
+
 
 function PrivateRoute({ children }) {
   const { token, loading } = useAuth();
@@ -31,8 +32,8 @@ export default function App() {
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/login" element={<LoginSignup />} />
         </Routes>
-        {/* <Test /> */}
       </div>
+      <Footer />
     </div>
   );
 }
