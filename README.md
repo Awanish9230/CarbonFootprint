@@ -82,6 +82,8 @@ carbon-footprint-tracker/
   - Environment variables: `PORT`, `MONGO_URI`, `JWT_SECRET`
   - Configure CORS to allow your frontend domain.
 
+
+
 ## Notes
 - Dark mode is implemented and persisted via `localStorage`.
 - UI is responsive (mobile-first). Tables/lists adapt to cards on small screens and charts are responsive.

@@ -1,9 +1,32 @@
+/* 1️⃣ @import statements first */
+@import './components/util.css';
+
+/* 2️⃣ Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import './components/util.css';
-
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 }
+
+/* Global background + text */
+body {
+  @apply bg-[#0a0a0a] text-white;
+}
+
+/* Links & highlights */
+a {
+  @apply text-blue-400 hover:text-blue-500 transition-colors;
+}
+
+/* Headings stronger white */
+h1, h2, h3, h4 {
+  @apply text-white font-semibold;
+}
+
+/* Muted text */
+.text-muted {
+  @apply text-gray-400;
+}
+

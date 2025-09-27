@@ -1,5 +1,6 @@
+// emissionFactors.js
 // Basic set of emission factors (kgCO2e per unit)
-// In production, expand and localize for India as needed.
+// Localized for India
 module.exports = [
   { name: 'vehicle_km', category: 'transport', unit: 'km', factor: 0.192 }, // car average
   { name: 'electricity_kwh', category: 'energy', unit: 'kWh', factor: 0.82 }, // India grid approx

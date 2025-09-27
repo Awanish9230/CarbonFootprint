@@ -12,8 +12,10 @@ async function getRecommendations(summary = {}) {
   if (b.shoppingSpend && b.shoppingSpend > 500) {
     recs.push('Reduce impulse purchases; prefer durable, repairable items with eco-labels.');
   }
-  if (b.foodKgCO2e && b.foodKgCO2e > 5) {
+  if (b.foodKgCO2e && b.foodKgCO2e < 5) {
     recs.push('Try vegetarian meals 3 days/week and reduce red meat consumption.');
+  }else{
+    recs.push('Try vegetarian meals 5 days/week and reduce red meat consumption.');
   }
 
   if (recs.length === 0) {

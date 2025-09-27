@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
 import { useAuth } from '../context/AuthContext';
+import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const { token, user, logout } = useAuth();
+  const { token, logout } = useAuth();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -15,39 +16,123 @@ export default function Navbar() {
     else root.classList.remove('dark');
   }, []);
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setMenuOpen(false);
+  };
+
   return (
-    <nav className="bg-white/80 dark:bg-gray-800/80 backdrop-blur sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="font-bold">Carbon Footprint Tracker</Link>
-        <div className="flex items-center gap-2">
-          <button className="sm:hidden p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setOpen(!open)} aria-label="Toggle Menu">☰</button>
+    <nav className="bg-[#0a0a0a]/90 backdrop-blur sticky top-0 z-50 border-b border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Brand */}
+        <Link
+          to="/"
+          className="font-bold text-xl text-blue-400 hover:text-blue-300 transition"
+        >
+          EcoReduce
+        </Link>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-6 text-white">
+          <Link to="/" className="relative group">
+            Home
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+          </Link>
+          {token && (
+            <>
+              <Link to="/dashboard" className="relative group">
+                Dashboard
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+              </Link>
+              <Link to="/leaderboard" className="relative group">
+                Leaderboard
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+              </Link>
+              <Link to="/community" className="relative group">
+                Community
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+              </Link>
+              <Link to="/profile" className="relative group">
+                Profile
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+              </Link>
+            </>
+          )}
+          {!token ? (
+            <Link
+              to="/login"
+              className="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium transition"
+            >
+              Login
+            </Link>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-medium transition"
+            >
+              Logout
+            </button>
+          )}
           <DarkModeToggle />
         </div>
-        <div className="hidden sm:flex items-center gap-4">
-          <Link to="/">Home</Link>
-          {token && <Link to="/dashboard">Dashboard</Link>}
-          {token && <Link to="/leaderboard">Leaderboard</Link>}
-          {token && <Link to="/community">Community</Link>}
-          {token && <Link to="/profile">Profile</Link>}
-          {!token ? (
-            <Link to="/login" className="px-3 py-1 rounded bg-emerald-600 text-white">Login</Link>
-          ) : (
-            <button onClick={() => { logout(); navigate('/'); }} className="px-3 py-1 rounded bg-rose-600 text-white">Logout</button>
-          )}
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center gap-2">
+          <DarkModeToggle />
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-white focus:outline-none text-2xl"
+          >
+            {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
+          </button>
         </div>
       </div>
-      {open && (
-        <div className="sm:hidden px-4 pb-3 flex flex-col gap-2">
-          <Link to="/" onClick={() => setOpen(false)}>Home</Link>
-          {token && <Link to="/dashboard" onClick={() => setOpen(false)}>Dashboard</Link>}
-          {token && <Link to="/leaderboard" onClick={() => setOpen(false)}>Leaderboard</Link>}
-          {token && <Link to="/community" onClick={() => setOpen(false)}>Community</Link>}
-          {token && <Link to="/profile" onClick={() => setOpen(false)}>Profile</Link>}
-          {!token ? (
-            <Link to="/login" onClick={() => setOpen(false)} className="px-3 py-1 rounded bg-emerald-600 text-white inline-block w-max">Login</Link>
-          ) : (
-            <button onClick={() => { logout(); setOpen(false); }} className="px-3 py-1 rounded bg-rose-600 text-white w-max">Logout</button>
-          )}
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#0a0a0a]/95 border-t border-gray-800">
+          <div className="flex flex-col gap-4 px-4 py-4 text-white">
+            <Link
+              to="/"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-400 transition"
+            >
+              Home
+            </Link>
+            {token && (
+              <>
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                  Dashboard
+                </Link>
+                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                  Leaderboard
+                </Link>
+                <Link to="/community" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                  Community
+                </Link>
+                <Link to="/profile" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                  Profile
+                </Link>
+              </>
+            )}
+            {!token ? (
+              <Link
+                to="/login"
+                onClick={() => setMenuOpen(false)}
+                className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-medium transition text-center"
+              >
+                Login
+              </Link>
+            ) : (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-medium transition text-center"
+              >
+                Logout
+              </button>
+            )}
+          </div>
         </div>
       )}
     </nav>

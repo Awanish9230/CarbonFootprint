@@ -1,43 +1,73 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import api from '../api/axios';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 
-export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem('cft_token'));
+const API_URL = 'http://localhost:5000/api/auth'; // Backend URL
+
+export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [token, setTokenState] = useState(localStorage.getItem('token') || null);
+  const [loading, setLoading] = useState(true); // Loading state to check user auth
 
-  useEffect(() => {
+  // Set JWT in axios headers and localStorage
+  const setToken = (token) => {
     if (token) {
-      localStorage.setItem('cft_token', token);
-      api.get('/auth/me').then((res) => setUser(res.data)).catch(() => setUser(null));
+      localStorage.setItem('token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setTokenState(token);
     } else {
-      localStorage.removeItem('cft_token');
-      setUser(null);
+      localStorage.removeItem('token');
+      delete axios.defaults.headers.common['Authorization'];
+      setTokenState(null);
     }
-  }, [token]);
+  };
+
+  // Load user on mount
+  useEffect(() => {
+    const initAuth = async () => {
+      const localToken = localStorage.getItem('token');
+      if (localToken) {
+        setToken(localToken);
+        try {
+          const res = await axios.get(`${API_URL}/me`);
+          setUser(res.data);
+        } catch (err) {
+          setToken(null);
+          setUser(null);
+        }
+      }
+      setLoading(false);
+    };
+    initAuth();
+  }, []);
 
   const login = async (email, password) => {
-    const res = await api.post('/auth/login', { email, password });
+    const res = await axios.post(`${API_URL}/login`, { email, password });
     setToken(res.data.token);
     setUser(res.data.user);
+    return res.data.user;
   };
 
-  const register = async (payload) => {
-    const res = await api.post('/auth/register', payload);
+  const register = async ({ name, email, password, state }) => {
+    const res = await axios.post(`${API_URL}/register`, { name, email, password, state });
     setToken(res.data.token);
     setUser(res.data.user);
+    return res.data.user;
   };
 
-  const logout = () => setToken(null);
+  const logout = () => {
+    setUser(null);
+    setToken(null);
+    navigate('/login');
+  };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, token, login, register, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+};
