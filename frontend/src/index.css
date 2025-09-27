@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './components/util.css';
+
+:root {
+  color-scheme: light dark;
+}
