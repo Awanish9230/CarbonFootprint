@@ -104,3 +104,4 @@ npm run dev
 - An AI recommendation stub exists (`backend/services/recommendationService.js`). Integrate your preferred provider by extending this service.
 Shantanu
 Raj
+.env 
