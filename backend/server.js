@@ -1,12 +1,12 @@
+require('dotenv').config(); // Load env variables at the very top
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const morgan = require('morgan');
 
-dotenv.config();
-
 const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 if (process.env.NODE_ENV !== 'test') {
@@ -24,16 +24,18 @@ app.use('/api/emissions', emissionRoutes);
 app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/community', communityRoutes);
 
+// Health check route
 app.get('/', (req, res) => {
   res.json({ status: 'ok', service: 'Carbon Footprint Tracker API' });
 });
 
-// Global error handler (basic)
+// Global error handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status || 500).json({ message: err.message || 'Server Error' });
 });
 
+// Start server after connecting to MongoDB
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/carbon_footprint_tracker';
 
