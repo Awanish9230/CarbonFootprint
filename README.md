@@ -35,11 +35,13 @@ carbon-footprint-tracker/
  ```bash
 cd backend
 npm install
+npm install multer
 npm run dev
 
 ## Frontend
 cd frontend
 npm install
+npm install framer-motion
 npm run dev
 
 

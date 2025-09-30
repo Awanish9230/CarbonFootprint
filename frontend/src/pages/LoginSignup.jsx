@@ -15,6 +15,7 @@ export default function LoginSignup() {
     if (!authLoading && user) navigate('/dashboard');
   }, [authLoading, user, navigate]);
 
+
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async (e) => {
@@ -45,21 +46,19 @@ export default function LoginSignup() {
         {/* Mode Switch */}
         <div className="flex justify-center gap-2 mb-4">
           <button
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              mode === 'login'
+            className={`px-4 py-2 rounded-lg font-medium transition ${mode === 'login'
                 ? 'bg-emerald-600 text-white shadow'
                 : 'bg-[#1a1a1a] text-white hover:bg-gray-800'
-            }`}
+              }`}
             onClick={() => setMode('login')}
           >
             Login
           </button>
           <button
-            className={`px-4 py-2 rounded-lg font-medium transition ${
-              mode === 'signup'
+            className={`px-4 py-2 rounded-lg font-medium transition ${mode === 'signup'
                 ? 'bg-emerald-600 text-white shadow'
                 : 'bg-[#1a1a1a] text-white hover:bg-gray-800'
-            }`}
+              }`}
             onClick={() => setMode('signup')}
           >
             Sign Up
