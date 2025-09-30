@@ -104,3 +104,6 @@ npm run dev
 - Dark mode is implemented and persisted via `localStorage`.
 - UI is responsive (mobile-first). Tables/lists adapt to cards on small screens and charts are responsive.
 - An AI recommendation stub exists (`backend/services/recommendationService.js`). Integrate your preferred provider by extending this service.
+Shantanu
+Raj
+.env 
