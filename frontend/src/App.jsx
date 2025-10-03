@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Leaderboard from './pages/Leaderboard';
 import Community from './pages/Community';
 import Profile from './pages/Profile';
+import AboutUs from './pages/AboutUs';
 import LoginSignup from './pages/LoginSignup';
 import { useAuth } from './context/AuthContext';
 
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="/leaderboard" element={<PrivateRoute><Leaderboard /></PrivateRoute>} />
           <Route path="/community" element={<PrivateRoute><Community /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/about" element={<PrivateRoute><AboutUs /></PrivateRoute>} />
           <Route path="/login" element={<LoginSignup />} />
         </Routes>
       </div>

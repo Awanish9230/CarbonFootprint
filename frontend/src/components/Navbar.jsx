@@ -53,6 +53,10 @@ export default function Navbar() {
                 Community
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
               </Link>
+              <Link to="/about" className="relative group">
+                About Us
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+              </Link>
               <Link to="/profile" className="relative group">
                 Profile
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
