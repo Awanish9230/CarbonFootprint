@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
 import { useAuth } from '../context/AuthContext';
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
@@ -7,6 +7,7 @@ import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 export default function Navbar() {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -22,6 +23,13 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
+  const linkClasses = (path) =>
+    `relative group px-2 py-1 transition ${
+      location.pathname === path
+        ? 'text-blue-400 font-semibold'
+        : 'text-white hover:text-blue-400'
+    }`;
+
   return (
     <nav className="bg-[#0a0a0a]/90 backdrop-blur sticky top-0 z-50 border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -34,35 +42,37 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-6 text-white">
-          <Link to="/" className="relative group">
+        <div className="hidden md:flex items-center gap-6">
+          <Link to="/" className={linkClasses('/')}>
             Home
-            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+            <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
           </Link>
+
           {token && (
             <>
-              <Link to="/dashboard" className="relative group">
+              <Link to="/dashboard" className={linkClasses('/dashboard')}>
                 Dashboard
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/dashboard' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
-              <Link to="/leaderboard" className="relative group">
+              <Link to="/leaderboard" className={linkClasses('/leaderboard')}>
                 Leaderboard
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/leaderboard' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
-              <Link to="/community" className="relative group">
+              <Link to="/community" className={linkClasses('/community')}>
                 Community
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/community' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
-              <Link to="/about" className="relative group">
+              <Link to="/about" className={linkClasses('/about')}>
                 About Us
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
-              <Link to="/profile" className="relative group">
+              <Link to="/profile" className={linkClasses('/profile')}>
                 Profile
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-blue-400 transition-all group-hover:w-full"></span>
+                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/profile' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
             </>
           )}
+
           {!token ? (
             <Link
               to="/login"
@@ -78,7 +88,8 @@ export default function Navbar() {
               Logout
             </button>
           )}
-          <DarkModeToggle />
+
+          {/* <DarkModeToggle /> */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -100,26 +111,28 @@ export default function Navbar() {
             <Link
               to="/"
               onClick={() => setMenuOpen(false)}
-              className="hover:text-blue-400 transition"
+              className={location.pathname === '/' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}
             >
               Home
             </Link>
+
             {token && (
               <>
-                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/dashboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
                   Dashboard
                 </Link>
-                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/leaderboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
                   Leaderboard
                 </Link>
-                <Link to="/community" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                <Link to="/community" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
                   Community
                 </Link>
-                <Link to="/profile" onClick={() => setMenuOpen(false)} className="hover:text-blue-400 transition">
+                <Link to="/profile" onClick={() => setMenuOpen(false)} className={location.pathname === '/profile' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
                   Profile
                 </Link>
               </>
             )}
+
             {!token ? (
               <Link
                 to="/login"
