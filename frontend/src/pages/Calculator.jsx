@@ -72,8 +72,8 @@ export default function Calculator() {
                         className="w-24 h-24 mb-4"
                     />
                     <h3 className="text-xl font-bold text-cyan-400 mb-2 text-center">
-  Oops! No results found
-</h3>
+                        Oops! No results found
+                    </h3>
 
                     <p className="text-gray-300 text-center">We couldn't find any item matching "<b>{query}</b>".</p>
 
