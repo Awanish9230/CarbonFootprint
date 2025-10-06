@@ -64,10 +64,11 @@ router.get('/summary', auth, async (req, res) => {
         electricityKwh: acc.electricityKwh + e.breakdown.electricityKwh,
         shoppingSpend: acc.shoppingSpend + e.breakdown.shoppingSpend,
         foodKgCO2e: acc.foodKgCO2e + e.breakdown.foodKgCO2e,
-        other: acc.other + e.breakdown.other,
+       
         flightsKm: (acc.flightsKm || 0) + (e.breakdown.flightsKm || 0),
         waterLiters: (acc.waterLiters || 0) + (e.breakdown.waterLiters || 0),
-        wasteKg: (acc.wasteKg || 0) + (e.breakdown.wasteKg || 0)
+        wasteKg: (acc.wasteKg || 0) + (e.breakdown.wasteKg || 0),
+        other: acc.other + e.breakdown.other,
       }),
       { vehicleKm: 0, electricityKwh: 0, shoppingSpend: 0, foodKgCO2e: 0, other: 0, flightsKm: 0, waterLiters: 0, wasteKg: 0 }
     );

@@ -89,7 +89,7 @@ export default function Navbar() {
             </button>
           )}
 
-          {/* <DarkModeToggle /> */}
+           <DarkModeToggle /> 
         </div>
 
         {/* Mobile Menu Button */}
