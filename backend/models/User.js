@@ -1,32 +1,80 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+// backend/models/User.js
+const mongoose = require("mongoose");
 
+// -------------------- Sub-schemas --------------------
+
+// Daily log schema
+const dailyLogSchema = new mongoose.Schema({
+  date: { type: Date, required: true },
+  actionsCompleted: { type: Number, default: 0 },
+});
+
+// Challenge schema
+const challengeSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, default: "" },
+  startDate: { type: Date, default: Date.now },
+  endDate: { type: Date },
+  completed: { type: Boolean, default: false },
+  progress: { type: Number, default: 0 }, // 0-100%
+  pointsReward: { type: Number, default: 10 }, // points earned on completion
+  badgeReward: { type: String, default: "" },  // optional badge unlocked
+  carbonReduction: { type: Number, default: 0 } // kg CO₂ reduced on completion
+});
+
+// Badge schema
+const badgeSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  unlocked: { type: Boolean, default: false },
+  date: { type: Date, default: Date.now }
+});
+
+// Milestone schema
+const milestoneSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  achieved: { type: Boolean, default: false },
+  date: { type: Date, default: Date.now }
+});
+
+// Reward schema
+const rewardSchema = new mongoose.Schema({
+  item: { type: String, required: true },
+  redeemed: { type: Boolean, default: false },
+  pointsRequired: { type: Number, default: 100 }
+});
+
+// -------------------- Main User schema --------------------
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
-  state: { type: String, default: '' },
-  photoURL: { type: String, default: '' },
-  rank: { type: String, default: 'Beginner' },
-  posts: { type: Number, default: 0 },
-  goals: [
-    {
-      text: { type: String, required: true },
-      completed: { type: Boolean, default: false }
-    }
-  ],
-  communityActivity: { type: String, default: '' },
-  badges: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Badge' }]
-});
+  state: { type: String, default: "" },
 
-// Compare password
-userSchema.methods.comparePassword = async function(password) {
-  return bcrypt.compare(password, this.passwordHash);
-};
+  // Points, level, streak, daily goals
+  points: { type: Number, default: 0 },
+  level: { type: Number, default: 1 },
+  streak: { type: Number, default: 0 },
+  lastStreakDate: { type: Date, default: null }, // <--- NEW: Tracks last streak update
+  dailyGoal: { type: Number, default: 1 },
+  dailyLogs: { type: [dailyLogSchema], default: [] },
 
-// Hash password
-userSchema.statics.hashPassword = async function(password) {
-  return bcrypt.hash(password, 10);
-};
+  // Virtual Eco Garden
+  virtualGarden: {
+    treesPlanted: { type: Number, default: 0 },
+    gardenLevel: { type: Number, default: 1 },
+    carbonSaved: { type: Number, default: 0 } // optional, synced with main carbonSaved
+  },
 
-module.exports = mongoose.model('User', userSchema);
+  // Carbon Savings
+  carbonSaved: { type: Number, default: 0 },
+
+  // Gamified challenges & badges
+  challenges: { type: [challengeSchema], default: [] },
+  badges: { type: [badgeSchema], default: [] },
+
+  // Milestones & rewards
+  milestones: { type: [milestoneSchema], default: [] },
+  rewards: { type: [rewardSchema], default: [] }
+}, { timestamps: true });
+
+module.exports = mongoose.model("User", userSchema);

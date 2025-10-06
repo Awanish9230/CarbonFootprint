@@ -66,6 +66,10 @@ export default function Navbar() {
                 About Us
                 <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
               </Link>
+              <Link to="/game" className={linkClasses('/game')}>
+                Game
+                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
+              </Link>
               <Link to="/profile" className={linkClasses('/profile')}>
                 Profile
                 <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/profile' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
@@ -126,6 +130,9 @@ export default function Navbar() {
                 </Link>
                 <Link to="/community" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
                   Community
+                </Link>
+                <Link to="/game" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
+                  Game
                 </Link>
                 <Link to="/profile" onClick={() => setMenuOpen(false)} className={location.pathname === '/profile' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
                   Profile

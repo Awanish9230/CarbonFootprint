@@ -1,4 +1,3 @@
-// backend/server.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -11,6 +10,8 @@ import authRoutes from "./routes/authRoutes.js";
 import emissionRoutes from "./routes/emissionRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
+import gamificationRoutes from "./routes/gamificationRoutes.js"; // <-- New
+import User from "./models/User.js";
 
 // Load environment variables
 dotenv.config();
@@ -30,6 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/emissions", emissionRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/community", communityRoutes);
+app.use("/api/gamification", gamificationRoutes); // <-- Use gamification routes
 
 // Health check route
 app.get("/", (req, res) => {

@@ -1,3 +1,4 @@
+// frontend/src/context/AuthContext.jsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -5,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
-// Backend API URL
 const API_URL = "http://localhost:5000/api/auth";
 
 export const AuthProvider = ({ children }) => {
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setTokenState] = useState(localStorage.getItem("token") || null);
   const [loading, setLoading] = useState(true);
 
-  // Set JWT in axios headers and localStorage
+  // ✅ Configure axios auth header & persist token
   const setToken = (token) => {
     if (token) {
       localStorage.setItem("token", token);
@@ -27,44 +27,81 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Fetch user profile from backend
+  // ✅ Fetch current logged-in user profile
   const fetchUser = async () => {
     try {
       const res = await axios.get(`${API_URL}/profile`);
-      setUser(res.data);
+      const u = res.data;
+
+      if (!u || !u._id) throw new Error("User ID not found");
+
+      // ✅ Save userId for gamification & dashboard
+      localStorage.setItem("userId", u._id);
+
+      // ✅ Safely define virtualGarden defaults
+      const vg = u.virtualGarden || {};
+      const simplifiedUser = {
+        _id: u._id,
+        name: u.name || "User",
+        email: u.email || "",
+        state: u.state || "",
+        points: u.points || 0,
+        streak: u.streak || 0,
+        dailyGoal: u.dailyGoal || 1,
+        virtualGarden: {
+          treesPlanted: vg.treesPlanted || 0,
+          gardenLevel: vg.gardenLevel || 1,
+          carbonSaved: vg.carbonSaved || 0,
+        },
+        carbonSaved: u.carbonSaved || 0,
+        challenges: u.challenges || [],
+        badges: u.badges || [],
+        level: u.level || 1,
+        milestones: u.milestones || [],
+        rewards: u.rewards || [],
+        dailyLogs: u.dailyLogs || [],
+      };
+
+      setUser(simplifiedUser);
     } catch (err) {
-      console.error("Profile fetch error:", err);
-      setToken(null);
-      setUser(null);
+      console.error("❌ Error fetching user profile:", err.message || err);
+      logout(); // token invalid → logout
     } finally {
       setLoading(false);
     }
   };
 
-  // Load user on mount
+  // ✅ Run on mount or token change
   useEffect(() => {
     if (token) {
-      setToken(token); // ensures axios header set
+      setToken(token); // set axios header
       fetchUser();
     } else {
       setLoading(false);
     }
-  }, []);
+  }, [token]);
 
-  // Login
+  // ✅ Login
   const login = async (email, password) => {
     try {
       const res = await axios.post(`${API_URL}/login`, { email, password });
-      setToken(res.data.token);
-      setUser(res.data.user);
-      return res.data.user;
+      const { token, user } = res.data;
+
+      if (!user || !token) throw new Error("Invalid response from server");
+
+      // Save both token and userId
+      setToken(token);
+      localStorage.setItem("userId", user._id);
+      setUser(user);
+
+      return user;
     } catch (err) {
       console.error("Login error:", err);
-      throw err.response?.data?.message || "Login failed";
+      throw err.response?.data?.message || err.message || "Login failed";
     }
   };
 
-  // Register
+  // ✅ Register
   const register = async ({ name, email, password, state }) => {
     try {
       const res = await axios.post(`${API_URL}/register`, {
@@ -73,25 +110,42 @@ export const AuthProvider = ({ children }) => {
         password,
         state,
       });
-      setToken(res.data.token);
-      setUser(res.data.user);
-      return res.data.user;
+      const { token, user } = res.data;
+
+      if (!user || !token) throw new Error("Invalid response from server");
+
+      // Save both token and userId
+      setToken(token);
+      localStorage.setItem("userId", user._id);
+      setUser(user);
+
+      return user;
     } catch (err) {
       console.error("Register error:", err);
-      throw err.response?.data?.message || "Registration failed";
+      throw err.response?.data?.message || err.message || "Registration failed";
     }
   };
 
-  // Logout
+  // ✅ Logout
   const logout = () => {
     setUser(null);
     setToken(null);
+    localStorage.removeItem("userId");
     navigate("/login");
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, token, login, register, logout, loading }}
+      value={{
+        user,
+        setUser,
+        token,
+        login,
+        register,
+        logout,
+        loading,
+        fetchUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
