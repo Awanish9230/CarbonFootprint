@@ -47,8 +47,10 @@ const milestoneSchema = new mongoose.Schema({
 const rewardSchema = new mongoose.Schema({
   item: { type: String, required: true },
   redeemed: { type: Boolean, default: false },
-  pointsRequired: { type: Number, default: 100 }
+  pointsRequired: { type: Number, default: 100 },
+  image: { type: String, default: "" } // ✅ Add this
 });
+
 
 // -------------------- Main User schema --------------------
 const userSchema = new mongoose.Schema({

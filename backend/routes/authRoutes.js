@@ -37,14 +37,19 @@ router.post("/register", async (req, res) => {
       badges: [],
       dailyLogs: [],
       level: 1,
-      // ✅ Default Marketplace rewards
+
+      // ✅ Default Marketplace rewards with images
       rewards: [
-        { item: "Eco Mug", pointsRequired: 50 },
-        { item: "Reusable Bag", pointsRequired: 75 },
-        { item: "Plant a Tree Kit", pointsRequired: 100 }
+        { item: "Eco Mug", pointsRequired: 50, image: "https://images.prestogifts.com/upload/New-Product-Listing/Utility-Gifts-Catalogue/MG-6009/1431x1431/66ded57255874_6009-1431-BG.webp" },
+        { item: "Reusable Bag", pointsRequired: 75, image: "https://daksindia.com/wp-content/uploads/2021/08/web1.jpeg" },
+        { item: "Plant a Tree Kit", pointsRequired: 100, image: "https://images-cdn.ubuy.co.in/63b3fd57eb8ac71eb86f244a-bonsai-tree-kit-nifsel-bonsai-starter.jpg" },
+        { item: "Solar Charger", pointsRequired: 150, image: "https://variety.com/wp-content/uploads/2025/04/blavor-charger-deal.jpg?w=731&h=476&crop=1" },
+        { item: "Water Bottle", pointsRequired: 30, image: "https://homafy.com/wp-content/uploads/2023/03/school-water-bottle.jpeg" },
+        { item: "Seed Pack", pointsRequired: 40, image: "https://organicbazar.net/cdn/shop/files/45_vegetable_seed_kit_vegetables_seeds_organic_bazar_all_season_vegetable_seeds_seeds_kit_all_vegetable_seeds_kit.jpg?v=1755175866&width=1946" },
+        { item: "Eco Notebook", pointsRequired: 60, image: "https://seedballs.in/cdn/shop/files/EcoFriendly-_Custom_Printed-Spiral_Notebook_2.jpg?v=1739765460" },
+        { item: "Bamboo Toothbrush", pointsRequired: 25, image: "https://5.imimg.com/data5/SELLER/Default/2021/11/RP/GI/TL/140258896/natural-bamboo-tooth-brush.png" }
       ]
     });
-
 
     await user.save();
 
@@ -60,6 +65,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // ---------------------- LOGIN ----------------------
 router.post("/login", async (req, res) => {

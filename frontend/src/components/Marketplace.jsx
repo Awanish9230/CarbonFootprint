@@ -31,7 +31,7 @@ export default function Marketplace({ user, userId, refreshUser }) {
   return (
     <div className="mb-6">
       <h2 className="text-xl font-semibold mb-2 text-black dark:text-white">Marketplace 🛒</h2>
-      
+
       {errorMsg && (
         <p className="mb-4 text-red-500 dark:text-red-400 font-semibold">{errorMsg}</p>
       )}
@@ -42,31 +42,43 @@ export default function Marketplace({ user, userId, refreshUser }) {
           return (
             <div
               key={r.item}
-              className={`p-4 rounded-lg shadow flex flex-col items-start ${
-                r.redeemed
+              className={`p-4 rounded-lg shadow flex flex-col items-start ${r.redeemed
                   ? "bg-green-100 dark:bg-green-900"
                   : canRedeem
-                  ? "bg-orange-100 dark:bg-orange-900"
-                  : "bg-gray-200 dark:bg-gray-700"
-              }`}
+                    ? "bg-orange-100 dark:bg-orange-900"
+                    : "bg-gray-200 dark:bg-gray-700"
+                }`}
             >
+              {/* Reward Image */}
+              {r.image && (
+                <img
+                  src={r.image}
+                  alt={r.item}
+                  className="w-16 h-16 object-contain mb-2"
+                />
+              )}
+
+              {/* Reward Name */}
               <p className="font-semibold mb-1 text-black dark:text-white">{r.item}</p>
+
+              {/* Points Info */}
               <p className="mb-2 text-black dark:text-white">
                 {r.redeemed
                   ? "Redeemed ✅"
                   : canRedeem
-                  ? `Points Required: ${r.pointsRequired}`
-                  : `Need ${r.pointsRequired - user.points} more points`}
+                    ? `Points Required: ${r.pointsRequired}`
+                    : `Need ${r.pointsRequired - user.points} more points`}
               </p>
+
+              {/* Redeem Button */}
               {!r.redeemed && (
                 <button
                   disabled={redeemingItem === r.item || !canRedeem}
                   onClick={() => redeemReward(r.item)}
-                  className={`px-3 py-1 rounded text-white ${
-                    redeemingItem === r.item || !canRedeem
+                  className={`px-3 py-1 rounded text-white ${redeemingItem === r.item || !canRedeem
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-orange-500 hover:bg-orange-600 dark:bg-orange-700 dark:hover:bg-orange-600"
-                  }`}
+                    }`}
                 >
                   {redeemingItem === r.item ? "Redeeming..." : "Redeem"}
                 </button>
