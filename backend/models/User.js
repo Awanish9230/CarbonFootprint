@@ -7,7 +7,14 @@ const mongoose = require("mongoose");
 const dailyLogSchema = new mongoose.Schema({
   date: { type: Date, required: true },
   actionsCompleted: { type: Number, default: 0 },
+  loggedActions: [
+    {
+      actionType: { type: String, required: true },
+      date: { type: Date, default: Date.now },
+    },
+  ],
 });
+
 
 // Challenge schema
 const challengeSchema = new mongoose.Schema({
@@ -55,7 +62,7 @@ const userSchema = new mongoose.Schema({
   level: { type: Number, default: 1 },
   streak: { type: Number, default: 0 },
   lastStreakDate: { type: Date, default: null }, // <--- NEW: Tracks last streak update
-  dailyGoal: { type: Number, default: 1 },
+  dailyGoal: { type: Number, default: 2 },
   dailyLogs: { type: [dailyLogSchema], default: [] },
 
   // Virtual Eco Garden
