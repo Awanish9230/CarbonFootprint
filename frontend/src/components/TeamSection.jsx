@@ -29,13 +29,13 @@ const teamMembers = [
         name: "Arth Saxena",
         role: "Frontend Developer",
         img: arthImg,
-        desc: "Works on analyzing carbon footprint data and insights.",
+        desc: "Focused on building responsive and user-friendly UI with React.",
     },
     {
         name: "Awanish Kumar Verma",
         role: "Backend Developer",
         img: awanishImg,
-        desc: "Managing project workflow, integrations, and deployment.",
+        desc: "Developing robust backend APIs and handling database operations.",
     },
 ];
 
