@@ -1,48 +1,81 @@
+// backend/routes/emissionRoutes.js
 const express = require('express');
 const Joi = require('joi');
 const auth = require('../middleware/auth');
 const validate = require('../middleware/validate');
 const EmissionLog = require('../models/EmissionLog');
-const EmissionFactor = require('../models/EmissionFactor');
 const { computeFromInput } = require('../utils/calculator');
 const { getRecommendationsWithGemini } = require('../services/recommendationService');
 
 const router = express.Router();
 
-// --- Updated schema to include new inputs ---
+// Validation schema
 const logSchema = Joi.object({
   date: Joi.date().optional(),
-  vehicleKm: Joi.number().min(0).default(0),
-  electricityKwh: Joi.number().min(0).default(0),
-  shoppingSpend: Joi.number().min(0).default(0),
-  foodKgCO2e: Joi.number().min(0).default(0),
+  vehicle_km: Joi.number().min(0).default(0),
+  bus_km: Joi.number().min(0).default(0),
+  rail_km: Joi.number().min(0).default(0),
+  flights_km: Joi.number().min(0).default(0),
+  cycle_km: Joi.number().min(0).default(0),
+  electricity_kwh: Joi.number().min(0).default(0),
+  lpg_kg: Joi.number().min(0).default(0),
+  shopping_inr: Joi.number().min(0).default(0),
+  food_kgco2e: Joi.number().min(0).default(0),
+  beef_kg: Joi.number().min(0).default(0),
+  chicken_kg: Joi.number().min(0).default(0),
+  vegetables_kg: Joi.number().min(0).default(0),
+  water_liters: Joi.number().min(0).default(0),
+  waste_kg: Joi.number().min(0).default(0),
   other: Joi.number().min(0).default(0),
-
-  // New fields
-  flightsKm: Joi.number().min(0).default(0),
-  waterLiters: Joi.number().min(0).default(0),
-  wasteKg: Joi.number().min(0).default(0)
 });
 
-
-// --- Log emission entry ---
+// POST /log
 router.post('/log', auth, validate(logSchema), async (req, res) => {
   try {
-    const { totalCO2, breakdown } = computeFromInput(req.body);
+    const input = {
+      vehicleKm: req.body.vehicle_km,
+      busKm: req.body.bus_km,
+      railKm: req.body.rail_km,
+      flightsKm: req.body.flights_km,
+      cycleKm: req.body.cycle_km,
+      electricityKwh: req.body.electricity_kwh,
+      lpgKg: req.body.lpg_kg,
+      shoppingSpend: req.body.shopping_inr,
+      foodKgCO2e: req.body.food_kgco2e,
+      beefKg: req.body.beef_kg,
+      chickenKg: req.body.chicken_kg,
+      vegetablesKg: req.body.vegetables_kg,
+      waterLiters: req.body.water_liters,
+      wasteKg: req.body.waste_kg,
+      other: req.body.other || 0,
+    };
+
+    const { totalCO2, breakdown } = computeFromInput(input);
+
     const log = await EmissionLog.create({
       user: req.user.id,
       date: req.body.date || new Date(),
       totalCO2,
-      breakdown
+      breakdown,
     });
-    res.json(log);
+
+    // Convert breakdown values to numbers to avoid Decimal issues
+    const safeBreakdown = {};
+    for (const k in breakdown) safeBreakdown[k] = Number(breakdown[k] || 0);
+
+    res.json({
+      _id: log._id,
+      date: log.date,
+      totalCO2: Number(log.totalCO2 || 0),
+      breakdown: safeBreakdown,
+    });
   } catch (err) {
-    console.error('Error logging emission:', err);
+    console.error('❌ Error logging emission:', err);
     res.status(500).json({ error: 'Failed to log emission' });
   }
 });
 
-// --- Summary endpoint ---
+// GET /summary
 router.get('/summary', auth, async (req, res) => {
   try {
     const range = (req.query.range || 'monthly').toLowerCase();
@@ -54,88 +87,62 @@ router.get('/summary', auth, async (req, res) => {
     else if (range === 'yearly') start.setFullYear(now.getFullYear() - 1);
     else start.setMonth(now.getMonth() - 1);
 
-    const logs = await EmissionLog.find({ user: req.user.id, date: { $gte: start } }).sort({ date: 1 });
-    const totals = logs.map(l => ({ date: l.date, totalCO2: l.totalCO2, breakdown: l.breakdown }));
+    const logs = await EmissionLog.find({
+      user: req.user.id,
+      date: { $gte: start },
+    }).sort({ date: 1 }).lean();
 
-    const sum = totals.reduce((acc, e) => acc + e.totalCO2, 0);
-    const aggregateBreakdown = totals.reduce(
-      (acc, e) => ({
-        vehicleKm: acc.vehicleKm + e.breakdown.vehicleKm,
-        electricityKwh: acc.electricityKwh + e.breakdown.electricityKwh,
-        shoppingSpend: acc.shoppingSpend + e.breakdown.shoppingSpend,
-        foodKgCO2e: acc.foodKgCO2e + e.breakdown.foodKgCO2e,
-       
-        flightsKm: (acc.flightsKm || 0) + (e.breakdown.flightsKm || 0),
-        waterLiters: (acc.waterLiters || 0) + (e.breakdown.waterLiters || 0),
-        wasteKg: (acc.wasteKg || 0) + (e.breakdown.wasteKg || 0),
-        other: acc.other + e.breakdown.other,
-      }),
-      { vehicleKm: 0, electricityKwh: 0, shoppingSpend: 0, foodKgCO2e: 0, other: 0, flightsKm: 0, waterLiters: 0, wasteKg: 0 }
-    );
+    const entries = logs.map((l) => ({
+      date: l.date,
+      totalCO2: Number(l.totalCO2 || 0),
+      breakdown: Object.fromEntries(
+        Object.entries(l.breakdown || {}).map(([k, v]) => [k, Number(v || 0)])
+      ),
+    }));
 
-    res.json({ range, from: start, to: now, totalCO2: sum, breakdown: aggregateBreakdown, entries: totals });
+    const aggregateBreakdown = entries.reduce((acc, e) => {
+      for (const key in e.breakdown) {
+        acc[key] = (acc[key] || 0) + e.breakdown[key];
+      }
+      return acc;
+    }, {});
+
+    const sum = entries.reduce((acc, e) => acc + e.totalCO2, 0);
+
+    res.json({
+      range,
+      from: start,
+      to: now,
+      totalCO2: sum,
+      breakdown: aggregateBreakdown,
+      entries,
+    });
   } catch (err) {
-    console.error('Error fetching summary:', err);
+    console.error('❌ Error fetching summary:', err);
     res.status(500).json({ error: 'Failed to fetch summary' });
   }
 });
 
-// --- Search emission factors ---
-router.get('/search-item', auth, async (req, res) => {
-  try {
-    const q = (req.query.q || '').trim();
-    if (!q) return res.json({ items: [], alternatives: [] });
-
-    const regex = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-    const items = await EmissionFactor.find({ name: regex }).limit(10);
-
-    const categories = [...new Set(items.map(i => i.category))];
-    const alternatives = await EmissionFactor.find({ category: { $in: categories } }).limit(12);
-
-    res.json({
-      items,
-      alternatives: alternatives.filter(a => !items.some(i => i.id === a.id)).slice(0, 8)
-    });
-  } catch (err) {
-    console.error('Error searching items:', err);
-    res.status(500).json({ error: 'Failed to search items' });
-  }
-});
-
-// --- Recommendations endpoint using Gemini ---
+// GET /recommendations
 router.get('/recommendations', auth, async (req, res) => {
   try {
-    const now = new Date();
-    const start = new Date(now);
-    start.setMonth(now.getMonth() - 1); // last month
-
-    const logs = await EmissionLog.find({ user: req.user.id, date: { $gte: start } });
+    const logs = await EmissionLog.find({ user: req.user.id }).sort({ date: 1 }).lean();
     const summary = logs.reduce(
       (acc, l) => {
-        acc.totalCO2 += l.totalCO2;
-        acc.breakdown.vehicleKm += l.breakdown.vehicleKm;
-        acc.breakdown.electricityKwh += l.breakdown.electricityKwh;
-        acc.breakdown.shoppingSpend += l.breakdown.shoppingSpend;
-        acc.breakdown.foodKgCO2e += l.breakdown.foodKgCO2e;
-        acc.breakdown.other += l.breakdown.other;
-        acc.breakdown.flightsKm += l.breakdown.flightsKm || 0;
-        acc.breakdown.waterLiters += l.breakdown.waterLiters || 0;
-        acc.breakdown.wasteKg += l.breakdown.wasteKg || 0;
+        acc.totalCO2 += Number(l.totalCO2 || 0);
+        for (const key in l.breakdown) {
+          acc.breakdown[key] = (acc.breakdown[key] || 0) + Number(l.breakdown[key] || 0);
+        }
         return acc;
       },
-      { totalCO2: 0, breakdown: { vehicleKm: 0, electricityKwh: 0, shoppingSpend: 0, foodKgCO2e: 0, other: 0, flightsKm: 0, waterLiters: 0, wasteKg: 0 } }
+      { totalCO2: 0, breakdown: {} }
     );
 
-    // Fetch recommendations from Gemini + rule-based separately
-    const { ruleBased, aiBased } = await getRecommendationsWithGemini(summary);
+    const { ruleBased = [], aiBased = [] } = await getRecommendationsWithGemini(summary);
 
-    res.json({
-      range: 'monthly',
-      ruleBased,
-      aiBased
-    });
+    res.json({ ruleBased, aiBased });
   } catch (err) {
-    console.error('Error fetching recommendations:', err);
+    console.error('❌ Error fetching recommendations:', err);
     res.status(500).json({ error: 'Failed to fetch recommendations' });
   }
 });

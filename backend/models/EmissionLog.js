@@ -1,17 +1,24 @@
+// emissionLog.js
 const mongoose = require('mongoose');
 
 const breakdownSchema = new mongoose.Schema(
   {
-    vehicleKm: { type: Number, default: 0 },
-    electricityKwh: { type: Number, default: 0 },
-    shoppingSpend: { type: Number, default: 0 },
-    foodKgCO2e: { type: Number, default: 0 },
+    vehicle_km: { type: Number, default: 0 },
+    electricity_kwh: { type: Number, default: 0 },
+    shopping_inr: { type: Number, default: 0 },
+    food_kgco2e: { type: Number, default: 0 },
+    lpg_kg: { type: Number, default: 0 },
+    rail_km: { type : Number, default: 0 },
+    bus_km: { type: Number, default: 0 },
+    cycle_km: { type: Number, default: 0 },
+    beef_kg: { type: Number, default: 0 },
+    chicken_kg: { type: Number, default: 0 },
+    vegetables_kg: { type: Number, default: 0 },
+    flights_km: { type: Number, default: 0 },
+    water_liters: { type: Number, default: 0 },
+    waste_kg: { type: Number, default: 0 },
+    // optional “other” if you want to allow extras
     other: { type: Number, default: 0 },
-    
-    // --- New fields ---
-    flightsKm: { type: Number, default: 0 },
-    waterLiters: { type: Number, default: 0 },
-    wasteKg: { type: Number, default: 0 }
   },
   { _id: false }
 );

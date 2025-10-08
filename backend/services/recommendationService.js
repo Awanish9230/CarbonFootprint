@@ -1,74 +1,79 @@
-require('dotenv').config(); // Load .env
-const fetch = require('node-fetch'); // Make sure node-fetch is installed
+require('dotenv').config();
+const fetch = require('node-fetch');
 
 async function getRecommendationsWithGemini(summary = {}) {
   const ruleRecs = [];
   let aiRecs = [];
   const b = summary.breakdown || {};
 
-  // --- Rule-based suggestions ---
-if (b.vehicleKm && b.vehicleKm > 50) {
-  ruleRecs.push(
-    'Consider replacing short car trips with cycling or public transport at least 2 days/week.'
-  );
-}
+  // --- Enhanced Rule-Based Suggestions ---
 
-if (b.electricityKwh && b.electricityKwh > 10) {
-  ruleRecs.push(
-    'Shift heavy appliance use to off-peak hours and replace old bulbs with LEDs.'
-  );
-}
-
-if (b.shoppingSpend && b.shoppingSpend > 500) {
-  ruleRecs.push(
-    'Reduce impulse purchases; prefer durable, repairable items with eco-labels.'
-  );
-}
-
-if (b.foodKgCO2e != null) {
-  if (b.foodKgCO2e < 5) {
-    ruleRecs.push('Try vegetarian meals 3 days/week and reduce red meat consumption.');
-  } else {
-    ruleRecs.push('Try vegetarian meals 5 days/week and reduce red meat consumption.');
+  // Transport
+  if (b.vehicle_km && b.vehicle_km > 50) {
+    ruleRecs.push(
+      'Reduce car usage for short trips (<5 km); walk, cycle, or use public transport at least 3 days/week.'
+    );
   }
-}
 
-if (b.flightHours && b.flightHours > 5) {
-  ruleRecs.push('Consider reducing long-haul flights or use carbon offset programs.');
-}
+  if (b.flights_km && b.flights_km > 500) {
+    ruleRecs.push(
+      'Limit long-haul flights; consider virtual meetings and use carbon offset programs.'
+    );
+  }
 
-if (b.waterL && b.waterL > 200) {
-  ruleRecs.push('Take shorter showers and fix leaking taps to save water.');
-}
+  // Energy
+  if (b.electricity_kwh && b.electricity_kwh > 10) {
+    ruleRecs.push(
+      'Use energy-efficient appliances, switch to LED lights, and run high-energy devices in off-peak hours.'
+    );
+  }
 
-if (b.wasteKg && b.wasteKg > 2) {
-  ruleRecs.push('Increase recycling and composting; avoid single-use plastics.');
-}
+  if (b.other && b.other > 0) {
+    ruleRecs.push(
+      'Check other high-energy activities and try to reduce consumption wherever possible.'
+    );
+  }
 
-if (b.heatingKwh && b.heatingKwh > 15) {
-  ruleRecs.push('Lower thermostat by 1–2°C and insulate your home to save energy.');
-}
+  // Consumption
+  if (b.shopping_inr && b.shopping_inr > 500) {
+    ruleRecs.push(
+      'Prioritize durable, eco-friendly products; reduce impulse purchases and fast fashion.'
+    );
+  }
 
-if (b.publicTransportKm && b.publicTransportKm < 20) {
-  ruleRecs.push('Try using public transport or carpooling for more trips.');
-}
+  // Food
+  if (b.food_kgco2e != null) {
+    if (b.food_kgco2e < 5) {
+      ruleRecs.push(
+        'Include more plant-based meals: try 3 vegetarian days per week and reduce red meat consumption.'
+      );
+    } else {
+      ruleRecs.push(
+        'Significantly reduce red meat and dairy; aim for 5 vegetarian days per week.'
+      );
+    }
+  }
 
-if (b.clothingSpend && b.clothingSpend > 300) {
-  ruleRecs.push('Opt for sustainable clothing brands and buy fewer fast-fashion items.');
-}
+  // Water
+  if (b.water_liters && b.water_liters > 200) {
+    ruleRecs.push(
+      'Reduce water usage: take shorter showers, fix leaks, and use water-saving appliances.'
+    );
+  }
 
-if (b.meatKg && b.meatKg > 4) {
-  ruleRecs.push('Reduce meat consumption; try meat-free days twice a week.');
-}
+  // Waste
+  if (b.waste_kg && b.waste_kg > 2) {
+    ruleRecs.push(
+      'Increase recycling and composting; avoid single-use plastics and unnecessary packaging.'
+    );
+  }
 
-if (b.plasticUse && b.plasticUse > 1) {
-  ruleRecs.push('Use reusable bags, bottles, and containers to minimize plastic waste.');
-}
-
-if (b.electricVehicleKm && b.electricVehicleKm < 10) {
-  ruleRecs.push('Consider switching to an electric vehicle or hybrid for shorter commutes.');
-}
-
+  // Optional: Healthy habits for carbon + lifestyle
+  if (b.vegetables_kg && b.vegetables_kg < 2) {
+    ruleRecs.push(
+      'Incorporate more vegetables into meals; plant-based diets reduce both CO₂ and improve health.'
+    );
+  }
 
   // --- AI-based suggestions using Gemini ---
   try {
@@ -76,8 +81,7 @@ if (b.electricVehicleKm && b.electricVehicleKm < 10) {
 You are an expert in sustainability. Given the following user summary data:
 ${JSON.stringify(summary, null, 2)}
 
-Generate 3 actionable and personalized recommendations to help reduce their CO2 footprint, considering their biggest contributors. Be specific and measurable. Return suggestions as a JSON array of strings.
-Do NOT include Markdown syntax or extra text—output only valid JSON.
+Generate 3 actionable and personalized recommendations to help reduce their CO2 footprint, focusing on the highest contributors. Be specific, measurable, and realistic. Return suggestions as a JSON array of strings without any extra text.
 `;
 
     const response = await fetch(
@@ -104,24 +108,21 @@ Do NOT include Markdown syntax or extra text—output only valid JSON.
     // Remove any Markdown or ```json syntax
     geminiContent = geminiContent.replace(/```json|```/gi, '').trim();
 
-    // Parse as JSON, fallback to splitting lines
     try {
       const parsed = JSON.parse(geminiContent);
       if (Array.isArray(parsed)) aiRecs = parsed;
     } catch {
       aiRecs = geminiContent.split('\n').map((l) => l.trim()).filter(Boolean);
     }
-
   } catch (err) {
     console.error('Gemini API error:', err);
     aiRecs.push('Could not fetch AI-based recommendations this time. Please try again later.');
   }
 
-  // Deduplicate each separately
+  // Deduplicate
   const uniqueRuleRecs = Array.from(new Set(ruleRecs));
   const uniqueAiRecs = Array.from(new Set(aiRecs));
 
-  // RETURN AS SEPARATE ARRAYS
   return {
     ruleBased: uniqueRuleRecs.slice(0, 5),
     aiBased: uniqueAiRecs.slice(0, 5)
