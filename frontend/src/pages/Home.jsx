@@ -6,10 +6,25 @@ import Calculator from './Calculator';
 import './Hero.css';
 import kl_9 from '../assets/kl_9.jpg';
 import { motion } from 'framer-motion';
+import img1 from '../assets/img1.jpg';
+import img2 from '../assets/img2.jpg';
+import img3 from '../assets/img3.jpg';
+import img4 from '../assets/img4.jpg';
+import img5 from '../assets/img5.jpg';
+import img6 from '../assets/img6.jpg';
+import img7 from '../assets/img7.jpg';
+import img8 from '../assets/img8.jpg';
+import img9 from '../assets/img9.jpg';
+import img10 from '../assets/img10.jpg';
+import img11 from '../assets/img11.jpg';
+import img12 from '../assets/img12.jpg';
+import img13 from '../assets/img13.jpg';
+import img14 from '../assets/img14.jpg';
 
 export default function Home() {
   const [refreshKey, setRefreshKey] = useState(0);
-  const [newLog, setNewLog] = useState(null); // store new log for reactive update
+  const [newLog, setNewLog] = useState(null);
+  const [currentImage, setCurrentImage] = useState(0);
 
   const handleLogged = (log) => {
     // log returned from backend should have: date, totalCO2, breakdown
@@ -29,15 +44,43 @@ export default function Home() {
     }
   }, []);
 
+  const images = [
+    img1, img2, img3, img4, img5, img6, img7,
+    img8, img9, img10, img11, img12, img13, img14
+  ];
+
+    useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 2000); // 5000ms = 5 seconds per image
+    return () => clearInterval(interval);
+  }, [images.length]);
+
   return (
     <div className="space-y-10 w-full">
-      {/* Hero Section */}
+      {/* ================= HERO SECTION ================= */}
       <section
-        className="relative w-full min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] lg:h-screen bg-cover bg-center flex items-center justify-center snap-start rounded-2xl overflow-hidden"
-        style={{ backgroundImage: `url(${kl_9})` }}
+        className="relative w-full min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] lg:h-screen flex items-center justify-center snap-start rounded-2xl overflow-hidden"
       >
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative text-center py-16 sm:py-24 md:py-32">
+        {/* === Fading Background Slideshow === */}
+        <div className="absolute inset-0 overflow-hidden">
+          {images.map((src, index) => (
+            <motion.div
+              key={index}
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${src})`,
+                opacity: currentImage === index ? 1 : 0,
+                transition: 'opacity 1.5s ease-in-out',
+              }}
+            ></motion.div>
+          ))}
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        {/* === Hero Content === */}
+        <div className="relative text-center py-16 sm:py-24 md:py-32 z-10">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white typing">
             Track & Reduce Your{' '}
             <span className="text-blue-400">Carbon Footprint</span>

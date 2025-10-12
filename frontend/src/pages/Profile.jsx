@@ -99,7 +99,7 @@ export default function Profile() {
           {/* Profile Image */}
           <label className="cursor-pointer relative group">
             <img
-              src={user.photoURL || "/default-profile.png"}
+              src={user.photoURL || "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740&q=80"}
               alt="Profile"
               className="w-32 h-32 rounded-full object-cover mb-4 border-4 border-green-500 shadow-md group-hover:scale-105 transition-transform duration-300"
             />
