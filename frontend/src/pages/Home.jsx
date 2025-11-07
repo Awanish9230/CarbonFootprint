@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import EmissionForm from '../components/EmissionForm';
-import Dashboard from './Dashboard';
 import TeamSection from '../components/TeamSection';
 import Calculator from './Calculator';
 import './Hero.css';
-import kl_9 from '../assets/kl_9.jpg';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
+// Images
 import img1 from '../assets/img1.jpg';
 import img2 from '../assets/img2.jpg';
 import img3 from '../assets/img3.jpg';
@@ -25,9 +26,9 @@ export default function Home() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [newLog, setNewLog] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const navigate = useNavigate();
 
   const handleLogged = (log) => {
-    // log returned from backend should have: date, totalCO2, breakdown
     setNewLog({
       date: log.date,
       totalCO2: log.totalCO2,
@@ -49,10 +50,10 @@ export default function Home() {
     img8, img9, img10, img11, img12, img13, img14
   ];
 
-    useEffect(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 2000); // 5000ms = 5 seconds per image
+    }, 2000); // 2 seconds per image
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -62,7 +63,7 @@ export default function Home() {
       <section
         className="relative w-full min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] lg:h-screen flex items-center justify-center snap-start rounded-2xl overflow-hidden"
       >
-        {/* === Fading Background Slideshow === */}
+        {/* Background Slideshow */}
         <div className="absolute inset-0 overflow-hidden">
           {images.map((src, index) => (
             <motion.div
@@ -75,11 +76,10 @@ export default function Home() {
               }}
             ></motion.div>
           ))}
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="absolute inset-0 bg-black/50"></div> {/* Dark overlay */}
         </div>
 
-        {/* === Hero Content === */}
+        {/* Hero Content */}
         <div className="relative text-center py-16 sm:py-24 md:py-32 z-10">
           <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-white typing">
             Track & Reduce Your{' '}
@@ -101,9 +101,7 @@ export default function Home() {
               Quick Log
             </button>
             <button
-              onClick={() =>
-                document.getElementById("dashboard")?.scrollIntoView({ behavior: "smooth" })
-              }
+              onClick={() => navigate('/dashboard')}
               className="px-5 py-3 sm:px-6 sm:py-3 rounded-xl shadow-lg text-white font-semibold
                          bg-[linear-gradient(159deg,#0892d0,#4b0082)]
                          hover:scale-105 hover:shadow-purple-500/50 transition-all duration-300"
@@ -114,6 +112,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Quick Log Section */}
       <motion.section
         id="quick-log"
         className="w-full flex flex-col justify-center items-center snap-start
@@ -142,16 +141,8 @@ export default function Home() {
         </motion.div>
       </motion.section>
 
-
-      {/* Dashboard Section */}
-      {/* <div id="dashboard">
-        <Dashboard refreshKey={refreshKey} newLog={newLog} />
-      </div> */}
-
       {/* Calculator Section */}
-      <div>
-        <Calculator />
-      </div>
+      <Calculator />
 
       {/* Team Section */}
       <div id="team-section">

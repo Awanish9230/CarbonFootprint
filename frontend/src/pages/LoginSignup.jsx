@@ -30,9 +30,8 @@ export default function LoginSignup() {
           name: form.name,
           email: form.email,
           password: form.password,
-          state: form.state, // important
+          state: form.state,
         });
-
       }
       navigate("/dashboard");
     } catch (err) {
@@ -46,27 +45,30 @@ export default function LoginSignup() {
     return <div className="text-center mt-10 text-white">Loading...</div>;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a] p-4">
-      <div className="w-full max-w-md bg-[#111111] rounded-2xl shadow-lg p-6 space-y-5">
-        <h2 className="text-2xl font-bold text-white text-center">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#0a0a0a] to-[#111111] p-4">
+      <div className="w-full max-w-md bg-[#1a1a1a] rounded-3xl shadow-2xl p-8 space-y-6 border border-gray-800">
+        <h2 className="text-3xl font-bold text-white text-center tracking-wide">
           {mode === "login" ? "Login to Your Account" : "Create a New Account"}
         </h2>
 
-        <div className="flex justify-center gap-2 mb-4">
+        {/* Mode Toggle Buttons */}
+        <div className="flex justify-center gap-4 mb-6">
           <button
-            className={`px-4 py-2 rounded-lg font-medium transition ${mode === "login"
-                ? "bg-emerald-600 text-white shadow"
-                : "bg-[#1a1a1a] text-white hover:bg-gray-800"
-              }`}
+            className={`px-5 py-2 rounded-xl font-medium transition ${
+              mode === "login"
+                ? "bg-emerald-600 text-white shadow-lg"
+                : "bg-[#2a2a2a] text-white hover:bg-[#333333]"
+            }`}
             onClick={() => setMode("login")}
           >
             Login
           </button>
           <button
-            className={`px-4 py-2 rounded-lg font-medium transition ${mode === "signup"
-                ? "bg-emerald-600 text-white shadow"
-                : "bg-[#1a1a1a] text-white hover:bg-gray-800"
-              }`}
+            className={`px-5 py-2 rounded-xl font-medium transition ${
+              mode === "signup"
+                ? "bg-emerald-600 text-white shadow-lg"
+                : "bg-[#2a2a2a] text-white hover:bg-[#333333]"
+            }`}
             onClick={() => setMode("signup")}
           >
             Sign Up
@@ -77,7 +79,7 @@ export default function LoginSignup() {
           {mode === "signup" && (
             <>
               <input
-                className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
                 placeholder="Name"
                 name="name"
                 value={form.name}
@@ -85,7 +87,7 @@ export default function LoginSignup() {
                 required
               />
               <input
-                className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
                 placeholder="State (e.g., Karnataka)"
                 name="state"
                 value={form.state}
@@ -96,7 +98,7 @@ export default function LoginSignup() {
           )}
 
           <input
-            className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
             placeholder="Email"
             name="email"
             value={form.email}
@@ -105,7 +107,7 @@ export default function LoginSignup() {
             required
           />
           <input
-            className="w-full px-4 py-2 rounded-lg bg-[#1a1a1a] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
             placeholder="Password"
             name="password"
             value={form.password}
@@ -119,15 +121,15 @@ export default function LoginSignup() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 rounded-lg transition shadow disabled:opacity-50"
+            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-3 rounded-xl transition shadow-lg disabled:opacity-50"
           >
             {loading
               ? mode === "login"
                 ? "Logging in..."
                 : "Creating account..."
               : mode === "login"
-                ? "Login"
-                : "Create Account"}
+              ? "Login"
+              : "Create Account"}
           </button>
         </form>
 

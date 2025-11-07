@@ -5,10 +5,11 @@ import { useAuth } from '../context/AuthContext';
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 
 export default function Navbar() {
-  const { token, logout } = useAuth();
+  const { token, logout, user } = useAuth(); // user should have `name` property
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -20,6 +21,7 @@ export default function Navbar() {
   const handleLogout = () => {
     logout();
     navigate('/');
+    setDropdownOpen(false);
     setMenuOpen(false);
   };
 
@@ -43,37 +45,14 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/" className={linkClasses('/')}>
-            Home
-            <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-          </Link>
-
+          <Link to="/" className={linkClasses('/')}>Home</Link>
           {token && (
             <>
-              <Link to="/dashboard" className={linkClasses('/dashboard')}>
-                Dashboard
-                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/dashboard' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
-              <Link to="/leaderboard" className={linkClasses('/leaderboard')}>
-                Leaderboard
-                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/leaderboard' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
-              <Link to="/community" className={linkClasses('/community')}>
-                Community
-                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/community' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
-              <Link to="/about" className={linkClasses('/about')}>
-                About Us
-                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
-              <Link to="/game" className={linkClasses('/game')}>
-                Game
-                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/about' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
-              <Link to="/profile" className={linkClasses('/profile')}>
-                Profile
-                <span className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${location.pathname === '/profile' ? 'w-full' : 'w-0 group-hover:w-full'}`}></span>
-              </Link>
+              <Link to="/dashboard" className={linkClasses('/dashboard')}>Dashboard</Link>
+              <Link to="/leaderboard" className={linkClasses('/leaderboard')}>Leaderboard</Link>
+              <Link to="/community" className={linkClasses('/community')}>Community</Link>
+              <Link to="/game" className={linkClasses('/game')}>Game</Link>
+              <Link to="/profile" className={linkClasses('/profile')}>Profile</Link>
             </>
           )}
 
@@ -85,15 +64,29 @@ export default function Navbar() {
               Login
             </Link>
           ) : (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-medium transition"
-            >
-              Logout
-            </button>
+            // ✅ Avatar with dropdown
+            <div className="relative">
+              <div
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold cursor-pointer select-none"
+              >
+                {user?.name?.charAt(0).toUpperCase() || 'U'}
+              </div>
+
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-32 bg-[#1a1a1a] border border-gray-700 rounded-lg shadow-lg flex flex-col">
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-white hover:bg-red-600 rounded-t-lg transition"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           )}
 
-           <DarkModeToggle /> 
+          <DarkModeToggle />
         </div>
 
         {/* Mobile Menu Button */}
@@ -112,34 +105,16 @@ export default function Navbar() {
       {menuOpen && (
         <div className="md:hidden bg-[#0a0a0a]/95 border-t border-gray-800">
           <div className="flex flex-col gap-4 px-4 py-4 text-white">
-            <Link
-              to="/"
-              onClick={() => setMenuOpen(false)}
-              className={location.pathname === '/' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}
-            >
-              Home
-            </Link>
-
+            <Link to="/" onClick={() => setMenuOpen(false)} className={location.pathname === '/' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Home</Link>
             {token && (
               <>
-                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/dashboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
-                  Dashboard
-                </Link>
-                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/leaderboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
-                  Leaderboard
-                </Link>
-                <Link to="/community" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
-                  Community
-                </Link>
-                <Link to="/game" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
-                  Game
-                </Link>
-                <Link to="/profile" onClick={() => setMenuOpen(false)} className={location.pathname === '/profile' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>
-                  Profile
-                </Link>
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/dashboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Dashboard</Link>
+                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/leaderboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Leaderboard</Link>
+                <Link to="/community" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Community</Link>
+                <Link to="/game" onClick={() => setMenuOpen(false)} className={location.pathname === '/game' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Game</Link>
+                <Link to="/profile" onClick={() => setMenuOpen(false)} className={location.pathname === '/profile' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Profile</Link>
               </>
             )}
-
             {!token ? (
               <Link
                 to="/login"
