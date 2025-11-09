@@ -11,6 +11,7 @@ import emissionRoutes from "./routes/emissionRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
 import gamificationRoutes from "./routes/gamificationRoutes.js"; // <-- New
+import insightRoutes from "./routes/insightRoutes.js";
 import User from "./models/User.js";
 
 // Load environment variables
@@ -32,6 +33,7 @@ app.use("/api/emissions", emissionRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/community", communityRoutes);
 app.use("/api/gamification", gamificationRoutes); // <-- Use gamification routes
+app.use("/api/insights", insightRoutes);
 
 // Health check route
 app.get("/", (req, res) => {
