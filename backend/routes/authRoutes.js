@@ -47,7 +47,11 @@ router.post("/register", async (req, res) => {
         { item: "Water Bottle", pointsRequired: 30, image: "https://homafy.com/wp-content/uploads/2023/03/school-water-bottle.jpeg" },
         { item: "Seed Pack", pointsRequired: 40, image: "https://organicbazar.net/cdn/shop/files/45_vegetable_seed_kit_vegetables_seeds_organic_bazar_all_season_vegetable_seeds_seeds_kit_all_vegetable_seeds_kit.jpg?v=1755175866&width=1946" },
         { item: "Eco Notebook", pointsRequired: 60, image: "https://seedballs.in/cdn/shop/files/EcoFriendly-_Custom_Printed-Spiral_Notebook_2.jpg?v=1739765460" },
-        { item: "Bamboo Toothbrush", pointsRequired: 25, image: "https://5.imimg.com/data5/SELLER/Default/2021/11/RP/GI/TL/140258896/natural-bamboo-tooth-brush.png" }
+        { item: "Bamboo Toothbrush", pointsRequired: 25, image: "https://5.imimg.com/data5/SELLER/Default/2021/11/RP/GI/TL/140258896/natural-bamboo-tooth-brush.png" },
+        { item: "Metal Straw Set", pointsRequired: 35, image: "https://m.media-amazon.com/images/I/61I1pFPxNXL._SX425_.jpg" },
+        { item: "Cloth Shopping Kit", pointsRequired: 80, image: "https://m.media-amazon.com/images/I/81piLxtUxPL._SX679_.jpg" },
+        { item: "Home Compost Bin", pointsRequired: 120, image: "https://m.media-amazon.com/images/I/71C5i7NysxL._SX679_.jpg" },
+        { item: "Solar Lantern", pointsRequired: 90, image: "https://m.media-amazon.com/images/I/61h2qT9XyOL._SX679_.jpg" }
       ]
     });
 
@@ -104,6 +108,9 @@ router.get("/profile", auth, async (req, res) => {
       name: user.name,
       email: user.email,
       state: user.state,
+      photoURL: user.photoURL || "",
+      points: user.points || 0,
+      level: user.level || 1,
       dailyGoal: user.dailyGoal,
       streak: user.streak,
       virtualGarden: user.virtualGarden || { treesPlanted: 0, gardenLevel: 1 },
@@ -112,9 +119,33 @@ router.get("/profile", auth, async (req, res) => {
       rewards: user.rewards || [],
       milestones: user.milestones || [],
       badges: user.badges || [],
+      goals: user.goals || [],
+      dailyLogs: user.dailyLogs || [],
     });
   } catch (err) {
     console.error("Profile Error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ---------------------- UPDATE PROFILE ----------------------
+router.put("/profile", auth, async (req, res) => {
+  try {
+    const { name, state } = req.body;
+    const user = await User.findById(req.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (typeof name === "string" && name.trim()) {
+      user.name = name.trim();
+    }
+    if (typeof state === "string") {
+      user.state = state.trim();
+    }
+
+    await user.save();
+    res.json(user);
+  } catch (err) {
+    console.error("Update profile error:", err);
     res.status(500).json({ message: "Server error" });
   }
 });

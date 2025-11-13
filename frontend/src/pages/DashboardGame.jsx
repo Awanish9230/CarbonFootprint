@@ -109,9 +109,18 @@ export default function DashboardGame() {
       setShowStreakReminder(false);
       fetchUser();
     } catch (err) {
+      const backendMsg = err.response?.data?.message;
       console.error("Error logging action:", err.response?.data || err.message);
-      toast.error(err.response?.data?.message || "Failed to log action");
-      if (err.response?.data?.message === "Daily goal already reached!") {
+
+      if (backendMsg === "Action already logged today!") {
+        toast.error(
+          "You already logged this action today. Each action type can only be logged once per day."
+        );
+        return;
+      }
+
+      toast.error(backendMsg || "Failed to log action");
+      if (backendMsg === "Daily goal already reached!") {
         setDailyGoalReached(true);
       }
     }
@@ -210,6 +219,10 @@ export default function DashboardGame() {
             </p>
             <p>
               Points: <span className="font-bold">{user.points}</span>
+            </p>
+            <p className="mt-1 text-xs text-gray-300">
+              Note: Each action type can be logged only once per day. Try different eco-actions to reach your
+              daily goal.
             </p>
           </div>
         </div>

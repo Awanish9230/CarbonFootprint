@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
         name: u.name || "User",
         email: u.email || "",
         state: u.state || "",
+        photoURL: u.photoURL || "",
         points: u.points || 0,
         streak: u.streak || 0,
         dailyGoal: u.dailyGoal || 1,
@@ -59,6 +60,7 @@ export const AuthProvider = ({ children }) => {
         level: u.level || 1,
         milestones: u.milestones || [],
         rewards: u.rewards || [],
+        goals: u.goals || [],
         dailyLogs: u.dailyLogs || [],
       };
 

@@ -20,15 +20,23 @@ export default function Challenges({ user, userId, refreshUser }) {
     }
   };
 
-  if (!user.challenges || user.challenges.length === 0) {
+  const activeChallenges = (user.challenges || [])
+    .filter((c) => !c.completed)
+    .sort((a, b) => new Date(b.startDate || 0) - new Date(a.startDate || 0))
+    .slice(0, 6);
+
+  if (!activeChallenges.length) {
     return <p className="text-gray-400">No challenges available right now.</p>;
   }
 
   return (
     <div className="mb-6">
       <h2 className="text-xl font-semibold mb-2 text-black dark:text-white">Time-Limited Challenges ⏳</h2>
+      <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
+        Showing up to 6 active challenges for today.
+      </p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {user.challenges.map((c) => (
+        {activeChallenges.map((c) => (
           <div
             key={c._id}
             className={`p-4 rounded-lg shadow ${

@@ -29,10 +29,15 @@ router.get('/state/:state', async (req, res) => {
   const start = new Date(now);
   start.setMonth(now.getMonth() - 1);
 
-  const usersInState = await User.find({ state: req.params.state }, '_id');
+  // Case-insensitive match for state name
+  const stateParam = req.params.state.trim();
+  const usersInState = await User.find(
+    { state: { $regex: new RegExp(`^${stateParam}$`, 'i') } },
+    '_id'
+  );
   const userIds = usersInState.map((u) => u._id);
   const results = await aggregateByUsers({ date: { $gte: start }, user: { $in: userIds } });
-  res.json({ scope: 'state', state: req.params.state, from: start, to: now, results });
+  res.json({ scope: 'state', state: stateParam, from: start, to: now, results });
 });
 
 module.exports = router;

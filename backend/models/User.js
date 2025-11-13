@@ -48,9 +48,14 @@ const rewardSchema = new mongoose.Schema({
   item: { type: String, required: true },
   redeemed: { type: Boolean, default: false },
   pointsRequired: { type: Number, default: 100 },
-  image: { type: String, default: "" } // ✅ Add this
+  image: { type: String, default: "" }
 });
 
+// Goal schema (for "Goals for Reducing Emissions")
+const goalSchema = new mongoose.Schema({
+  text: { type: String, required: true },
+  completed: { type: Boolean, default: false },
+});
 
 // -------------------- Main User schema --------------------
 const userSchema = new mongoose.Schema({
@@ -58,6 +63,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   passwordHash: { type: String, required: true },
   state: { type: String, default: "" },
+  photoURL: { type: String, default: "" },
 
   // Points, level, streak, daily goals
   points: { type: Number, default: 0 },
@@ -83,7 +89,10 @@ const userSchema = new mongoose.Schema({
 
   // Milestones & rewards
   milestones: { type: [milestoneSchema], default: [] },
-  rewards: { type: [rewardSchema], default: [] }
+  rewards: { type: [rewardSchema], default: [] },
+
+  // Goals for reducing emissions
+  goals: { type: [goalSchema], default: [] },
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);
