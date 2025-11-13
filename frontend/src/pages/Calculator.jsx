@@ -45,7 +45,7 @@ export default function Calculator() {
                         {items.map((item, index) => (
                             <motion.div
                                 key={item._id}
-                                className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300"
+                                className="bg-white text-gray-900 rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white"
                                 whileHover={{ scale: 1.05 }}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export default function Calculator() {
             ) : searched && query.trim() ? (
                 // Better animated error
                 <motion.div
-                    className="flex flex-col items-center justify-center p-8 bg-gray-800 dark:bg-gray-900 border-2 border-gray-700 dark:border-gray-600 rounded-2xl shadow-lg mt-6"
+                    className="flex flex-col items-center justify-center p-8 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-white border-2 border-gray-200 dark:border-gray-600 rounded-2xl shadow-lg mt-6"
 
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}

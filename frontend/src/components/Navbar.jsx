@@ -28,17 +28,17 @@ export default function Navbar() {
   const linkClasses = (path) =>
     `relative group px-2 py-1 transition ${
       location.pathname === path
-        ? 'text-blue-400 font-semibold'
-        : 'text-white hover:text-blue-400'
+        ? 'text-emerald-600 dark:text-blue-400 font-semibold'
+        : 'text-gray-800 dark:text-gray-100 hover:text-emerald-600 dark:hover:text-blue-400'
     }`;
 
   return (
-    <nav className="bg-[#0a0a0a]/90 backdrop-blur sticky top-0 z-50 border-b border-gray-800">
+    <nav className="bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Brand */}
         <Link
           to="/"
-          className="font-bold text-xl text-blue-400 hover:text-blue-300 transition"
+          className="font-bold text-xl text-emerald-600 dark:text-blue-400 hover:text-emerald-500 dark:hover:text-blue-300 transition"
         >
           EcoReduce
         </Link>
@@ -94,7 +94,7 @@ export default function Navbar() {
           <DarkModeToggle />
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="text-white focus:outline-none text-2xl"
+            className="text-gray-800 dark:text-white focus:outline-none text-2xl"
           >
             {menuOpen ? <HiOutlineX /> : <HiOutlineMenu />}
           </button>
@@ -103,16 +103,16 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-[#0a0a0a]/95 border-t border-gray-800">
-          <div className="flex flex-col gap-4 px-4 py-4 text-white">
-            <Link to="/" onClick={() => setMenuOpen(false)} className={location.pathname === '/' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Home</Link>
+        <div className="md:hidden bg-white/95 dark:bg-[#0a0a0a]/95 border-t border-gray-200 dark:border-gray-800">
+          <div className="flex flex-col gap-4 px-4 py-4 text-gray-800 dark:text-white">
+            <Link to="/" onClick={() => setMenuOpen(false)} className={location.pathname === '/' ? 'text-emerald-600 dark:text-blue-400 font-semibold' : 'hover:text-emerald-600 dark:hover:text-blue-400'}>Home</Link>
             {token && (
               <>
-                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/dashboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Dashboard</Link>
-                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/leaderboard' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Leaderboard</Link>
-                <Link to="/community" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Community</Link>
-                <Link to="/game" onClick={() => setMenuOpen(false)} className={location.pathname === '/game' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Game</Link>
-                <Link to="/profile" onClick={() => setMenuOpen(false)} className={location.pathname === '/profile' ? 'text-blue-400 font-semibold' : 'hover:text-blue-400'}>Profile</Link>
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/dashboard' ? 'text-emerald-600 dark:text-blue-400 font-semibold' : 'hover:text-emerald-600 dark:hover:text-blue-400'}>Dashboard</Link>
+                <Link to="/leaderboard" onClick={() => setMenuOpen(false)} className={location.pathname === '/leaderboard' ? 'text-emerald-600 dark:text-blue-400 font-semibold' : 'hover:text-emerald-600 dark:hover:text-blue-400'}>Leaderboard</Link>
+                <Link to="/community" onClick={() => setMenuOpen(false)} className={location.pathname === '/community' ? 'text-emerald-600 dark:text-blue-400 font-semibold' : 'hover:text-emerald-600 dark:hover:text-blue-400'}>Community</Link>
+                <Link to="/game" onClick={() => setMenuOpen(false)} className={location.pathname === '/game' ? 'text-emerald-600 dark:text-blue-400 font-semibold' : 'hover:text-emerald-600 dark:hover:text-blue-400'}>Game</Link>
+                <Link to="/profile" onClick={() => setMenuOpen(false)} className={location.pathname === '/profile' ? 'text-emerald-600 dark:text-blue-400 font-semibold' : 'hover:text-emerald-600 dark:hover:text-blue-400'}>Profile</Link>
               </>
             )}
             {!token ? (

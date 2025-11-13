@@ -5,12 +5,12 @@ import { SiX } from "react-icons/si";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0B1E3F] text-gray-300 py-8 sm:py-12">
+    <footer className="bg-slate-100 text-gray-700 dark:bg-[#0B1E3F] dark:text-gray-300 py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
 
         {/* About Section */}
         <div>
-          <h3 className="text-white text-xl font-bold mb-4">CarbonTracker</h3>
+          <h3 className="text-gray-900 dark:text-white text-xl font-bold mb-4">CarbonTracker</h3>
           <p className="text-gray-400 text-sm">
             Helping you monitor and reduce your carbon footprint with actionable insights, tips, and AI-powered recommendations.
           </p>
@@ -25,7 +25,7 @@ export default function Footer() {
 
         {/* Navigation Links */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+          <h4 className="text-gray-900 dark:text-white font-semibold mb-4">Quick Links</h4>
           <ul className="space-y-2 text-gray-400 text-sm">
             <li><Link to="/" className="hover:text-white">Home</Link></li>
             <li><Link to="/dashboard" className="hover:text-white">Dashboard</Link></li>
@@ -38,7 +38,7 @@ export default function Footer() {
 
         {/* Resources */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Resources</h4>
+          <h4 className="text-gray-900 dark:text-white font-semibold mb-4">Resources</h4>
           <ul className="space-y-2 text-gray-400 text-sm">
             <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
             <li><Link to="/faq" className="hover:text-white">FAQs</Link></li>
@@ -49,7 +49,7 @@ export default function Footer() {
 
         {/* Newsletter Subscription */}
         <div>
-          <h4 className="text-white font-semibold mb-4">Subscribe</h4>
+          <h4 className="text-gray-900 dark:text-white font-semibold mb-4">Subscribe</h4>
           <p className="text-gray-400 text-sm mb-3">Get the latest tips to reduce your carbon footprint.</p>
           <form className="flex flex-col sm:flex-row gap-2">
             <input
@@ -68,7 +68,7 @@ export default function Footer() {
       </div>
 
       {/* Footer Bottom */}
-      <div className="mt-8 sm:mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
+      <div className="mt-8 sm:mt-12 border-t border-gray-300 dark:border-gray-700 pt-6 text-center text-gray-500 text-sm">
         &copy; {new Date().getFullYear()} CarbonTracker. All rights reserved.
       </div>
     </footer>

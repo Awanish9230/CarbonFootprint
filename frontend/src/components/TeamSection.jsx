@@ -60,7 +60,7 @@ export default function TeamSection() {
                     {teamMembers.slice(0, 3).map((member, index) => (
                         <motion.div
                             key={index}
-                            className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300"
+                            className="bg-white text-gray-900 rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white"
                             whileHover={{ scale: 1.05 }}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -86,7 +86,7 @@ export default function TeamSection() {
                     {teamMembers.slice(3).map((member, index) => (
                         <motion.div
                             key={index}
-                            className="bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300"
+                            className="bg-white text-gray-900 rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white"
                             whileHover={{ scale: 1.05 }}
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}

@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 
 export default function ChartCard({ data = [], range = 'monthly' }) {
-  if (!data || data.length === 0) return <p className="text-white text-center mt-4">No emission data available.</p>;
+  if (!data || data.length === 0) return <p className="text-center mt-4 text-gray-800 dark:text-white">No emission data available.</p>;
 
   // Prepare chart data
   const chartData = data.map((d) => {
@@ -48,19 +48,23 @@ export default function ChartCard({ data = [], range = 'monthly' }) {
   });
 
   return (
-    <div className="p-4 rounded border border-gray-700 bg-gray-900">
-      <h3 className="font-semibold mb-2 text-white">Emissions Over Time</h3>
+    <div className="p-4 rounded border bg-white text-gray-900 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+      <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">Emissions Over Time</h3>
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="date" tick={{ fill: '#fff' }} />
-            <YAxis tick={{ fill: '#fff' }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" strokeOpacity={0.8} />
+            <XAxis dataKey="date" tick={{ fill: '#374151' }} stroke="#9ca3af" />
+            <YAxis tick={{ fill: '#374151' }} stroke="#9ca3af" />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1a1a1a', border: 'none', color: '#fff' }}
+              contentStyle={{
+                backgroundColor: '#ffffff',
+                border: '1px solid #e5e7eb',
+                color: '#111827',
+              }}
               formatter={(value, name) => [`${Number(value).toFixed(2)} kg CO₂e`, name.replace(/_/g, ' ')]}
             />
-            <Legend wrapperStyle={{ color: '#fff' }} />
+            <Legend wrapperStyle={{ color: '#374151' }} />
 
             {/* Total CO2 Line */}
             <Line

@@ -61,7 +61,7 @@ export default function Home() {
     <div className="space-y-10 w-full">
       {/* ================= HERO SECTION ================= */}
       <section
-        className="relative w-full min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] lg:h-screen flex items-center justify-center snap-start rounded-2xl overflow-hidden"
+        className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] lg:h-screen flex items-center justify-center snap-start overflow-hidden"
       >
         {/* Background Slideshow */}
         <div className="absolute inset-0 overflow-hidden">
@@ -116,8 +116,8 @@ export default function Home() {
       <motion.section
         id="quick-log"
         className="w-full flex flex-col justify-center items-center snap-start
-             bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white
-             px-4 sm:px-6 md:px-12 py-12 md:py-24 rounded-2xl"
+             bg-white text-gray-900 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white
+             px-4 sm:px-6 md:px-12 py-12 md:py-24 rounded-2xl shadow-sm"
         initial={{ opacity: 0, rotateX: -15, y: 80 }}
         whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
         exit={{ opacity: 0, rotateX: 15, y: -80 }}
@@ -131,7 +131,7 @@ export default function Home() {
         </h2>
 
         <motion.div
-          className="bg-[#1c1c1c] p-6 md:p-10 rounded-3xl border border-gray-700 shadow-xl w-full max-w-4xl flex flex-col gap-4"
+          className="bg-white dark:bg-[#1c1c1c] p-6 md:p-10 rounded-3xl border border-gray-200 dark:border-gray-700 shadow-xl w-full max-w-4xl flex flex-col gap-4"
           initial={{ y: 20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}

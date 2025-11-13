@@ -1,5 +1,6 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./pages/Footer";
 import Home from "./pages/Home";
@@ -21,39 +22,53 @@ function PrivateRoute({ children }) {
   return token ? children : <Navigate to="/login" replace />;
 }
 
-export default function App() {
+function PageTransition({ children }) {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.15, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export default function App() {
+  const location = useLocation();
+
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-[#0a0a0a] dark:text-white transition-colors duration-200">
       <Navbar />
       <div className="max-w-6xl mx-auto p-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/dashboard"
-            element={<PrivateRoute><Dashboard /></PrivateRoute>}
-          />
-          <Route
-            path="/leaderboard"
-            element={<PrivateRoute><Leaderboard /></PrivateRoute>}
-          />
-          <Route
-            path="/community"
-            element={<PrivateRoute><Community /></PrivateRoute>}
-          />
-          <Route
-            path="/profile"
-            element={<PrivateRoute><Profile /></PrivateRoute>}
-          />
-          <Route
-            path="/about"
-            element={<PrivateRoute><AboutUs /></PrivateRoute>}
-          />
-          <Route
-            path="/game"
-            element={<PrivateRoute><Game /></PrivateRoute>}
-          />
-          <Route path="/login" element={<LoginSignup />} />
-        </Routes>
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route
+              path="/dashboard"
+              element={<PrivateRoute><PageTransition><Dashboard /></PageTransition></PrivateRoute>}
+            />
+            <Route
+              path="/leaderboard"
+              element={<PrivateRoute><PageTransition><Leaderboard /></PageTransition></PrivateRoute>}
+            />
+            <Route
+              path="/community"
+              element={<PrivateRoute><PageTransition><Community /></PageTransition></PrivateRoute>}
+            />
+            <Route
+              path="/profile"
+              element={<PrivateRoute><PageTransition><Profile /></PageTransition></PrivateRoute>}
+            />
+            <Route
+              path="/about"
+              element={<PrivateRoute><PageTransition><AboutUs /></PageTransition></PrivateRoute>}
+            />
+            <Route
+              path="/game"
+              element={<PrivateRoute><PageTransition><Game /></PageTransition></PrivateRoute>}
+            />
+            <Route path="/login" element={<PageTransition><LoginSignup /></PageTransition>} />
+          </Routes>
       </div>
       <Footer />
     </div>
