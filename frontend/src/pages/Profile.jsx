@@ -29,7 +29,34 @@ export default function Profile() {
     "Save water by shorter showers",
   ];
 
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  if (loading) return (
+    <div className="max-w-6xl mx-auto p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Left card skeleton */}
+        <div className="col-span-1 bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-2xl border border-gray-700 animate-pulse">
+          <div className="flex flex-col items-center">
+            <div className="w-32 h-32 rounded-full bg-gray-300 dark:bg-gray-700 mb-4"></div>
+            <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+            <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mb-6"></div>
+            <div className="grid grid-cols-2 gap-3 w-full">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-20 bg-gray-300 dark:bg-gray-700 rounded-xl"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Right cards skeleton */}
+        <div className="md:col-span-2 space-y-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="rounded-2xl p-4 bg-white dark:bg-gray-800 border border-gray-700 animate-pulse">
+              <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+              <div className="h-32 bg-gray-300 dark:bg-gray-700 rounded"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
   if (!user) return <div className="text-center mt-10">No profile found.</div>;
 
   useEffect(() => {

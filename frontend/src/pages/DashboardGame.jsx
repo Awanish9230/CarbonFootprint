@@ -154,9 +154,28 @@ export default function DashboardGame() {
 
   if (loading)
     return (
-      <p className="text-center mt-20 text-lg font-medium text-gray-700 dark:text-gray-300">
-        Loading...
-      </p>
+      <div className="min-h-screen p-8 max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-300 dark:border-gray-600 shadow-xl space-y-6">
+        {/* Title Skeleton */}
+        <div className="h-10 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto mb-6 animate-pulse"></div>
+        
+        {/* Main Card Skeleton */}
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl space-y-6 border-2 border-gray-200 dark:border-gray-600 animate-pulse">
+          <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+          <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-2/3 mb-3"></div>
+          <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded mb-4"></div>
+        </div>
+        
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-600 animate-pulse">
+              <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-2/3 mb-4"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-5/6"></div>
+            </div>
+          ))}
+        </div>
+      </div>
     );
 
   const { virtualGarden, badges, milestones, dailyTasks, carbonSaved } = user;

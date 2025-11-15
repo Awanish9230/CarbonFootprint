@@ -6,6 +6,7 @@ import ForecastCard from '../components/ForecastCard';
 import ReductionPlanCard from '../components/ReductionPlanCard';
 import BenchmarkCard from '../components/BenchmarkCard';
 import AssistantCard from '../components/AssistantCard';
+import SkeletonLoader from '../components/SkeletonLoader';
 
 export default function Dashboard({ refreshKey = 0, newLog = null }) {
   const [range, setRange] = useState('monthly');
@@ -154,7 +155,32 @@ export default function Dashboard({ refreshKey = 0, newLog = null }) {
 
 
   if (loadingSummary)
-    return <p className="text-center mt-4 text-gray-800 dark:text-white">Loading dashboard...</p>;
+    return (
+      <div className="space-y-8 p-6 md:p-12 bg-white text-gray-900 dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white min-h-screen rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
+        {/* Range Selector Skeleton */}
+        <div className="flex gap-3 mb-6 justify-center md:justify-start">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-10 w-24 bg-gray-300 dark:bg-gray-700 rounded-xl animate-pulse"></div>
+          ))}
+        </div>
+        
+        {/* Chart Skeleton */}
+        <SkeletonLoader type="chart" />
+        
+        {/* Stats Skeleton */}
+        <SkeletonLoader type="stats" count={4} />
+        
+        {/* Breakdown Skeleton */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+          <SkeletonLoader type="card" count={3} />
+        </div>
+        
+        {/* Insights Skeleton */}
+        <div className="grid grid-cols-1 gap-6 mt-6">
+          <SkeletonLoader type="card" count={3} />
+        </div>
+      </div>
+    );
 
   return (
     <div className="space-y-8 p-6 md:p-12 bg-white text-gray-900 dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white min-h-screen rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm">
