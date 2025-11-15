@@ -31,14 +31,21 @@ router.post("/log-action", async (req, res, next) => {
     const today = new Date();
     const todayStr = getTodayString();
 
-    // Find today's log
-    let todayLog = user.dailyLogs.find(
+    // Find today's log index
+    const todayLogIndex = user.dailyLogs.findIndex(
       (log) => log.date.toISOString().split("T")[0] === todayStr
     );
 
-    if (!todayLog) {
+    let todayLog;
+    if (todayLogIndex === -1) {
+      // Create new log for today
       todayLog = { date: today, actionsCompleted: 0, loggedActions: [] };
       user.dailyLogs.push(todayLog);
+      console.log('Created new daily log for today');
+    } else {
+      // Use existing log
+      todayLog = user.dailyLogs[todayLogIndex];
+      console.log(`Found existing log with ${todayLog.actionsCompleted} actions`);
     }
 
     // ✅ Limit: check if daily goal reached
@@ -67,6 +74,7 @@ router.post("/log-action", async (req, res, next) => {
     // Log the action
     todayLog.actionsCompleted += 1;
     todayLog.loggedActions.push({ actionType, date: today });
+    console.log(`Action logged: ${actionType}, Total today: ${todayLog.actionsCompleted}`);
 
     // Update streak only if daily goal reached today
     const lastStreakDate = user.lastStreakDate
@@ -76,6 +84,7 @@ router.post("/log-action", async (req, res, next) => {
     if (todayLog.actionsCompleted >= user.dailyGoal && lastStreakDate !== todayStr) {
       user.streak += 1;
       user.lastStreakDate = today;
+      console.log(`Streak updated to: ${user.streak}`);
     }
 
     // Update points, carbon, and virtual garden
@@ -95,8 +104,15 @@ router.post("/log-action", async (req, res, next) => {
       user.milestones.push({ title: "100kg CO₂ Saved", achieved: true, date: today });
     }
 
-    await user.save();
-    res.json(user);
+    // Mark the document as modified to ensure Mongoose saves subdocuments
+    user.markModified('dailyLogs');
+    user.markModified('badges');
+    user.markModified('milestones');
+    user.markModified('virtualGarden');
+
+    const savedUser = await user.save();
+    console.log(`User saved successfully. Actions completed: ${savedUser.dailyLogs.find(log => log.date.toISOString().split('T')[0] === todayStr)?.actionsCompleted}`);
+    res.json(savedUser);
   } catch (err) {
     console.error("Error in /log-action:", err.message);
     next(err);

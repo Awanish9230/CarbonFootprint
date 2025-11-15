@@ -25,4 +25,10 @@ h1, h2, h3, h4 {
 .text-muted {
   @apply text-gray-500 dark:text-gray-400;
 }
-
+/* index.css or globals.css */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; /* last-resort safety to prevent horizontal scrollbar */
+}

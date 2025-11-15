@@ -221,7 +221,7 @@ export default function Dashboard({ refreshKey = 0, newLog = null }) {
             {ruleRecs.length > 0 && (
               <div className="p-6 rounded-2xl shadow-lg border bg-white text-gray-900 border-gray-200 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-900 dark:to-black dark:text-white dark:border-gray-700">
                 <h3 className="font-bold text-blue-400 text-xl mb-3">Rule-Based Suggestions</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-300">
+                <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
                   {ruleRecs.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
               </div>
@@ -230,7 +230,7 @@ export default function Dashboard({ refreshKey = 0, newLog = null }) {
             {aiRecs.length > 0 && (
               <div className="p-6 rounded-2xl shadow-lg border bg-white text-gray-900 border-gray-200 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-900 dark:to-black dark:text-white dark:border-gray-700">
                 <h3 className="font-bold text-green-400 text-xl mb-3">AI-Powered Suggestions</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-300">
+                <ul className="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300">
                   {aiRecs.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
               </div>

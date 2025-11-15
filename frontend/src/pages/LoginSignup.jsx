@@ -45,9 +45,9 @@ export default function LoginSignup() {
     return <div className="text-center mt-10 text-white">Loading...</div>;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#0a0a0a] to-[#111111] p-4">
-      <div className="w-full max-w-md bg-[#1a1a1a] rounded-3xl shadow-2xl p-8 space-y-6 border border-gray-800">
-        <h2 className="text-3xl font-bold text-white text-center tracking-wide">
+    <div className="min-h-screen flex items-center justify-center  bg-gray-100 dark:bg-gradient-to-b dark:from-[#0a0a0a] dark:to-[#111111] p-4">
+      <div className="w-full max-w-md  bg-white dark:bg-[#1a1a1a] rounded-3xl shadow-2xl p-8 space-y-6 border border-gray-300 dark:border-gray-800">
+        <h2 className="text-3xl font-bold  text-gray-900 dark:text-white  text-center tracking-wide">
           {mode === "login" ? "Login to Your Account" : "Create a New Account"}
         </h2>
 
@@ -57,7 +57,7 @@ export default function LoginSignup() {
             className={`px-5 py-2 rounded-xl font-medium transition ${
               mode === "login"
                 ? "bg-emerald-600 text-white shadow-lg"
-                : "bg-[#2a2a2a] text-white hover:bg-[#333333]"
+                : "bg-gray-200 dark:bg-[#2a2a2a] text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-[#333333]"
             }`}
             onClick={() => setMode("login")}
           >
@@ -67,7 +67,7 @@ export default function LoginSignup() {
             className={`px-5 py-2 rounded-xl font-medium transition ${
               mode === "signup"
                 ? "bg-emerald-600 text-white shadow-lg"
-                : "bg-[#2a2a2a] text-white hover:bg-[#333333]"
+                : "bg-gray-200 dark:bg-[#2a2a2a] text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-[#333333]"
             }`}
             onClick={() => setMode("signup")}
           >
@@ -79,7 +79,7 @@ export default function LoginSignup() {
           {mode === "signup" && (
             <>
               <input
-                className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+                className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#111111] border border-gray-400 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
                 placeholder="Name"
                 name="name"
                 value={form.name}
@@ -87,7 +87,7 @@ export default function LoginSignup() {
                 required
               />
               <input
-                className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+                className="w-full px-4 py-3 rounded-xl  bg-white dark:bg-[#111111]  border border-gray-400 dark:border-gray-700  text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400  focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
                 placeholder="State (e.g., Karnataka)"
                 name="state"
                 value={form.state}
@@ -98,7 +98,7 @@ export default function LoginSignup() {
           )}
 
           <input
-            className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#111111] border border-gray-400 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
             placeholder="Email"
             name="email"
             value={form.email}
@@ -107,7 +107,7 @@ export default function LoginSignup() {
             required
           />
           <input
-            className="w-full px-4 py-3 rounded-xl bg-[#111111] border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
+            className="w-full px-4 py-3 rounded-xl bg-white dark:bg-[#111111] border border-gray-400 dark:border-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition"
             placeholder="Password"
             name="password"
             value={form.password}
@@ -116,7 +116,7 @@ export default function LoginSignup() {
             required
           />
 
-          {error && <div className="text-red-500 text-sm text-center">{error}</div>}
+          {error && <div className="text-red-600 dark:text-red-400 text-sm text-center">{error}</div>}
 
           <button
             type="submit"
@@ -133,7 +133,7 @@ export default function LoginSignup() {
           </button>
         </form>
 
-        <p className="text-center text-gray-400 text-sm mt-2">
+        <p className="text-center text-gray-600 dark:text-gray-400 text-sm mt-2">
           {mode === "login"
             ? "Don't have an account? Sign up above"
             : "Already have an account? Login above"}

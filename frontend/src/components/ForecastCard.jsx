@@ -31,7 +31,7 @@ export default function ForecastCard({ data, loading }) {
           <h4 className="font-semibold mb-2">Next 7 days</h4>
           <p className="text-2xl font-bold text-blue-400 mb-2">{Number(n7.total || 0).toFixed(2)} kg CO₂e</p>
           {n7.pctChangeVsPrev !== undefined && (
-            <p className="text-sm mb-2">Change vs prev 7: <span className={n7.pctChangeVsPrev >= 0 ? 'text-red-400' : 'text-emerald-400'}>{Number(n7.pctChangeVsPrev).toFixed(2)}%</span></p>
+            <p className="text-sm mb-2 text-gray-700 dark:text-gray-300">Change vs prev 7: <span className={n7.pctChangeVsPrev >= 0 ? 'text-red-400' : 'text-emerald-400'}>{Number(n7.pctChangeVsPrev).toFixed(2)}%</span></p>
           )}
           <CatList cats={n7.byCategory || {}} />
         </div>
@@ -39,7 +39,7 @@ export default function ForecastCard({ data, loading }) {
           <h4 className="font-semibold mb-2">Next 30 days</h4>
           <p className="text-2xl font-bold text-blue-400 mb-2">{Number(n30.total || 0).toFixed(2)} kg CO₂e</p>
           {n30.pctChangeVsPrev !== undefined && (
-            <p className="text-sm mb-2">Change vs prev 30: <span className={n30.pctChangeVsPrev >= 0 ? 'text-red-400' : 'text-emerald-400'}>{Number(n30.pctChangeVsPrev).toFixed(2)}%</span></p>
+            <p className="text-sm mb-2 text-gray-700 dark:text-gray-300">Change vs prev 30: <span className={n30.pctChangeVsPrev >= 0 ? 'text-red-400' : 'text-emerald-400'}>{Number(n30.pctChangeVsPrev).toFixed(2)}%</span></p>
           )}
           <CatList cats={n30.byCategory || {}} />
         </div>

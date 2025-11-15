@@ -12,7 +12,7 @@ export default function ReductionPlanCard({ data, loading }) {
       {(!items || items.length === 0) ? (
         <p className="text-gray-400">No suggestions.</p>
       ) : (
-        <ul className="space-y-2 text-gray-300">
+        <ul className="space-y-2 text-gray-500 dark:text-gray-300">
           {items.map((it, idx) => (
             <li key={idx} className="flex flex-col gap-1">
               <div className="flex justify-between text-sm">

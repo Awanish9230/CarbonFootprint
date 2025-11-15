@@ -22,7 +22,7 @@ export default function BenchmarkCard({ data, loading }) {
         <div className="rounded-xl p-4 border bg-gray-50 text-gray-900 border-gray-200 dark:bg-gray-900/40 dark:border-gray-700 dark:text-white">
           <h4 className="font-semibold mb-2">Your last 30 days</h4>
           <p className="text-2xl font-bold text-blue-400 mb-2">{Number(total || 0).toFixed(2)} kg CO₂e</p>
-          <ul className="text-sm text-gray-300 space-y-1">
+          <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
             {catOrder.map((c) => (
               <li key={c} className="flex justify-between">
                 <span className="capitalize">{c}</span>
@@ -34,7 +34,7 @@ export default function BenchmarkCard({ data, loading }) {
 
         <div className="rounded-xl p-4 border bg-gray-50 text-gray-900 border-gray-200 dark:bg-gray-900/40 dark:border-gray-700 dark:text-white">
           <h4 className="font-semibold mb-2">Community average</h4>
-          <ul className="text-sm text-gray-300 space-y-1">
+          <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
             {catOrder.map((c) => {
               const avg = community?.avg_by_category?.[c] || 0;
               const mine = byCategory[c] || 0;
