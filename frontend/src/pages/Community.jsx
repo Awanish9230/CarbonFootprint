@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import api from '../api/axios';
+import SkeletonLoader from '../components/SkeletonLoader';
 
 export default function Community() {
   const [posts, setPosts] = useState([]);
@@ -120,7 +121,7 @@ export default function Community() {
 
       {/* Posts */}
       {loading ? (
-        <div className="text-center text-gray-500">Loading posts...</div>
+        <SkeletonLoader type="card" count={3} />
       ) : posts.length === 0 ? (
         <div className="text-center text-gray-500">No posts yet. Be the first!</div>
       ) : (

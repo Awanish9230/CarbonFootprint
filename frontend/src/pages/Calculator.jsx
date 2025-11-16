@@ -22,7 +22,7 @@ export default function Calculator() {
 
     return (
         <motion.div
-            className="max-w-7xl mx-auto p-8 min-h-screen bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-300 dark:border-gray-600 shadow-xl"
+            className="max-w-7xl mx-auto p-8 min-h-screen  bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-300 dark:border-gray-700     shadow-xl"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: false, amount: 0.3 }}
@@ -45,7 +45,7 @@ export default function Calculator() {
                         {items.map((item, index) => (
                             <motion.div
                                 key={item._id}
-                                className="bg-white text-gray-900 rounded-2xl shadow-lg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white"
+                                className="bg-white text-gray-900 rounded-2xl shadow-  bg-white text-gray-900  rounded-2xl shadow-lg overflow-hidden  hover:shadow-blue-500/50 transition-all duration-300 dark:bg-gradient-to-br   dark:from-gray-900 dark:via-gray-800 dark:to-black    dark:text-whitelg overflow-hidden hover:shadow-blue-500/50 transition-all duration-300 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black dark:text-white"
                                 whileHover={{ scale: 1.05 }}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export default function Calculator() {
             ) : searched && query.trim() ? (
                 // Better animated error
                 <motion.div
-                    className="flex flex-col items-center justify-center p-8 bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-white border-2 border-gray-200 dark:border-gray-600 rounded-2xl shadow-lg mt-6"
+                    className="flex flex-col items-center justify-center p-8   bg-gray-100 text-gray-800   border-2 border-gray-200 rounded-2xl shadow-lg mt-6 dark:bg-gray-800 dark:text-gray-200   dark:border-gray-700"
 
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -75,7 +75,7 @@ export default function Calculator() {
                         Oops! No results found
                     </h3>
 
-                    <p className="text-gray-300 text-center">We couldn't find any item matching "<b>{query}</b>".</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-center">We couldn't find any item matching "<b>{query}</b>".</p>
 
                 </motion.div>
             ) : (

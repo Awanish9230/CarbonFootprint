@@ -26,6 +26,7 @@ export default function DashboardGame() {
   const [loading, setLoading] = useState(true);
   const [dailyGoalReached, setDailyGoalReached] = useState(false);
   const [showStreakReminder, setShowStreakReminder] = useState(false);
+  const [isLoggingAction, setIsLoggingAction] = useState(false);
 
   const fetchUser = async () => {
     try {
@@ -94,20 +95,44 @@ export default function DashboardGame() {
   }, []);
 
   const logAction = async () => {
-    if (!actions || !user?._id || dailyGoalReached) return;
+    // Prevent double submissions
+    if (isLoggingAction) {
+      console.log("Already logging an action, please wait...");
+      return;
+    }
+
+    // Validate all conditions
+    if (!actions || actions === "") {
+      toast.error("Please select an action first");
+      return;
+    }
+    
+    if (!user?._id) {
+      toast.error("User not found");
+      return;
+    }
+    
+    if (dailyGoalReached) {
+      toast.error("Daily goal already reached!");
+      return;
+    }
+
+    setIsLoggingAction(true);
+    console.log("Logging action:", actions, "for user:", user._id);
 
     try {
       const token = localStorage.getItem("token");
-      await api.post(
+      const response = await api.post(
         "/gamification/log-action",
         { userId: user._id, actionType: actions },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
+      console.log("Action logged successfully:", response.data);
       toast.success("Action logged successfully!");
       setActions("");
       setShowStreakReminder(false);
-      fetchUser();
+      await fetchUser();
     } catch (err) {
       const backendMsg = err.response?.data?.message;
       console.error("Error logging action:", err.response?.data || err.message);
@@ -116,21 +141,41 @@ export default function DashboardGame() {
         toast.error(
           "You already logged this action today. Each action type can only be logged once per day."
         );
-        return;
-      }
-
-      toast.error(backendMsg || "Failed to log action");
-      if (backendMsg === "Daily goal already reached!") {
+      } else if (backendMsg === "Daily goal already reached!") {
+        toast.error(backendMsg);
         setDailyGoalReached(true);
+      } else {
+        toast.error(backendMsg || "Failed to log action");
       }
+    } finally {
+      setIsLoggingAction(false);
     }
   };
 
   if (loading)
     return (
-      <p className="text-center mt-20 text-lg font-medium text-gray-700 dark:text-gray-300">
-        Loading...
-      </p>
+      <div className="min-h-screen p-8 max-w-7xl mx-auto bg-white dark:bg-gray-900 rounded-2xl border-2 border-gray-300 dark:border-gray-600 shadow-xl space-y-6">
+        {/* Title Skeleton */}
+        <div className="h-10 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto mb-6 animate-pulse"></div>
+        
+        {/* Main Card Skeleton */}
+        <div className="p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl space-y-6 border-2 border-gray-200 dark:border-gray-600 animate-pulse">
+          <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-1/3 mb-4"></div>
+          <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-2/3 mb-3"></div>
+          <div className="h-12 bg-gray-300 dark:bg-gray-700 rounded mb-4"></div>
+        </div>
+        
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border-2 border-gray-200 dark:border-gray-600 animate-pulse">
+              <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded w-2/3 mb-4"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-5/6"></div>
+            </div>
+          ))}
+        </div>
+      </div>
     );
 
   const { virtualGarden, badges, milestones, dailyTasks, carbonSaved } = user;
@@ -175,12 +220,12 @@ export default function DashboardGame() {
       </AnimatePresence>
 
       {/* Daily Streak & Actions */}
-      <div className="p-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white rounded-2xl shadow-xl space-y-6 border-2 border-gray-700 dark:border-gray-600">
+      <div className="p-8 bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black text-gray-900 dark:text-white rounded-2xl shadow-xl space-y-6 border-2 border-gray-200 dark:border-gray-600">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
           <div>
             <p className="text-xl font-semibold">Hello, {user.name}!</p>
 
-            {/* Daily Goal with progress */}
+            {/* Daily Goal with progress */}         
             <p>
               Daily Goal:{" "}
               <span className="font-bold">
@@ -204,7 +249,7 @@ export default function DashboardGame() {
                   <p className="text-sm">
                     {completed} / {goal} actions completed
                   </p>
-                  <div className="w-full bg-gray-700 rounded-full h-3 mt-1">
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mt-1">
                     <div
                       className="bg-gradient-to-r from-cyan-400 to-green-400 h-3 rounded-full transition-all duration-500"
                       style={{ width: `${progressPercent}%` }}
@@ -220,7 +265,7 @@ export default function DashboardGame() {
             <p>
               Points: <span className="font-bold">{user.points}</span>
             </p>
-            <p className="mt-1 text-xs text-gray-300">
+            <p className="mt-1 text-xs text-gray-600 dark:text-gray-300">
               Note: Each action type can be logged only once per day. Try different eco-actions to reach your
               daily goal.
             </p>
@@ -246,12 +291,13 @@ export default function DashboardGame() {
 
           <button
             onClick={logAction}
-            disabled={!actions || dailyGoalReached}
+            disabled={!actions || dailyGoalReached || isLoggingAction}
             className="px-5 py-3 sm:px-6 sm:py-3 rounded-xl shadow-lg text-white font-semibold text-sm sm:text-base md:text-lg
              bg-[linear-gradient(159deg,#0892d0,#4b0082)]
-             hover:scale-105 hover:shadow-purple-500/50 transition-all duration-300"
+             hover:scale-105 hover:shadow-purple-500/50 transition-all duration-300
+             disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Log Action
+            {isLoggingAction ? "Logging..." : "Log Action"}
           </button>
         </div>
       </div>

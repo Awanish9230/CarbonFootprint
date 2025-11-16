@@ -75,7 +75,7 @@ export default function TeamSection() {
                             <div className="p-6 text-center">
                                 <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
                                 <p className="text-sm text-blue-400 mb-3">{member.role}</p>
-                                <p className="text-gray-300 text-sm">{member.desc}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">{member.desc}</p>
                             </div>
                         </motion.div>
                     ))}
@@ -101,7 +101,7 @@ export default function TeamSection() {
                             <div className="p-6 text-center">
                                 <h3 className="text-xl font-semibold mb-1">{member.name}</h3>
                                 <p className="text-sm text-blue-400 mb-3">{member.role}</p>
-                                <p className="text-gray-300 text-sm">{member.desc}</p>
+                                <p className="text-sm text-gray-600 dark:text-gray-400">{member.desc}</p>
                             </div>
                         </motion.div>
                     ))}

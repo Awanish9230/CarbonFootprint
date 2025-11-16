@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
 import LeaderboardCard from '../components/LeaderboardCard';
+import SkeletonLoader from '../components/SkeletonLoader';
 
 export default function Leaderboard() {
   const [scope, setScope] = useState('national');
   const [stateFilter, setStateFilter] = useState('');
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      if (scope === 'national') {
-        const res = await api.get('/leaderboard/national');
-        setData(res.data.results || []);
-      } else {
-        const res = await api.get(`/leaderboard/state/${encodeURIComponent(stateFilter || 'Maharashtra')}`);
-        setData(res.data.results || []);
+      try {
+        setLoading(true);
+        if (scope === 'national') {
+          const res = await api.get('/leaderboard/national');
+          setData(res.data.results || []);
+        } else {
+          const res = await api.get(`/leaderboard/state/${encodeURIComponent(stateFilter || 'Maharashtra')}`);
+          setData(res.data.results || []);
+        }
+      } catch (err) {
+        console.error('Failed to fetch leaderboard:', err);
+      } finally {
+        setLoading(false);
       }
     })();
   }, [scope, stateFilter]);
@@ -30,9 +39,13 @@ export default function Leaderboard() {
         )}
       </div>
       <div className="grid grid-cols-1 gap-2">
-        {data.map((entry, idx) => (
-          <LeaderboardCard key={idx} entry={entry} rank={idx + 1} />
-        ))}
+        {loading ? (
+          <SkeletonLoader type="list" count={5} />
+        ) : (
+          data.map((entry, idx) => (
+            <LeaderboardCard key={idx} entry={entry} rank={idx + 1} />
+          ))
+        )}
       </div>
     </div>
   );
