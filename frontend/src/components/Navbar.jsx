@@ -20,7 +20,6 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/');
     setDropdownOpen(false);
     setMenuOpen(false);
   };
@@ -68,9 +67,17 @@ export default function Navbar() {
             <div className="relative">
               <div
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold cursor-pointer select-none"
+                className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold cursor-pointer select-none overflow-hidden"
               >
-                {user?.name?.charAt(0).toUpperCase() || 'U'}
+                {user?.photoURL ? (
+                  <img
+                    src={user.photoURL}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  user?.name?.charAt(0).toUpperCase() || 'U'
+                )}
               </div>
 
               {dropdownOpen && (
