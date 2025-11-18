@@ -1,5 +1,5 @@
 // utils/calculator.js
-const factorsList = require('./emissionFactors');
+import factorsList from './emissionFactors.js';
 
 // Create a map of emission factors for quick lookup
 const factorMap = factorsList.reduce((acc, f) => {
@@ -40,4 +40,4 @@ function computeFromInput(input = {}) {
   return { totalCO2, breakdown };
 }
 
-module.exports = { computeFromInput, factorsList };
+export { computeFromInput, factorsList };

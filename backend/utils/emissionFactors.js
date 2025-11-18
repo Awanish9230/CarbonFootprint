@@ -1,7 +1,7 @@
 // emissionFactors.js
 // Basic set of emission factors (kgCO2e per unit)
 // Localized for India
-module.exports = [
+const factors = [
   { name: 'vehicle_km', category: 'transport', unit: 'km', factor: 0.192 }, // car average
   { name: 'electricity_kwh', category: 'energy', unit: 'kWh', factor: 0.82 }, // India grid approx
   { name: 'shopping_inr', category: 'consumption', unit: 'INR', factor: 0.0006 }, // rough intensity per INR
@@ -19,3 +19,5 @@ module.exports = [
   { name: 'water_liters', category: 'water', unit: 'liter', factor: 0.0003 }, // water usage
   { name: 'waste_kg', category: 'waste', unit: 'kg', factor: 0.5 } // general waste
 ];
+
+export default factors;

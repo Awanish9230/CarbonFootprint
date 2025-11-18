@@ -2,7 +2,7 @@
 // Map fine-grained breakdown keys to 4 high-level categories used in analytics
 // transport, food, energy, waste
 
-const CATEGORY_MAP = {
+export const CATEGORY_MAP = {
   transport: [
     'vehicle_km',
     'bus_km',
@@ -28,7 +28,7 @@ const CATEGORY_MAP = {
   ],
 };
 
-function breakdownToFourCategories(breakdown = {}) {
+export function breakdownToFourCategories(breakdown = {}) {
   const result = { transport: 0, food: 0, energy: 0, waste: 0 };
   for (const [cat, keys] of Object.entries(CATEGORY_MAP)) {
     result[cat] = keys.reduce((sum, k) => sum + Number(breakdown[k] || 0), 0);
@@ -36,4 +36,3 @@ function breakdownToFourCategories(breakdown = {}) {
   return result;
 }
 
-module.exports = { CATEGORY_MAP, breakdownToFourCategories };

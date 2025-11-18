@@ -1,7 +1,7 @@
 // backend/services/benchmarkService.js
-const EmissionLog = require('../models/EmissionLog');
-const User = require('../models/User');
-const { breakdownToFourCategories } = require('../utils/categoryMapping');
+import EmissionLog from '../models/EmissionLog.js';
+import User from '../models/User.js';
+import { breakdownToFourCategories } from '../utils/categoryMapping.js';
 
 function sum(o) { return Object.values(o).reduce((a, b) => a + b, 0); }
 
@@ -75,7 +75,7 @@ function clusterFromShares(shares) {
   return 'Balanced lifestyle';
 }
 
-async function buildBenchmark(user) {
+export async function buildBenchmark(user) {
   const u = await user30d(user._id || user.id);
   const peers = await peers30d({ scope: 'state', state: user.state });
 
@@ -118,4 +118,3 @@ async function buildBenchmark(user) {
   };
 }
 
-module.exports = { buildBenchmark };

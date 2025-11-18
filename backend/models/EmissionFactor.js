@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const emissionFactorSchema = new mongoose.Schema(
   {
@@ -10,4 +10,4 @@ const emissionFactorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('EmissionFactor', emissionFactorSchema);
+export default mongoose.model('EmissionFactor', emissionFactorSchema);

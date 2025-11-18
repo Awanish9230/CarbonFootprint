@@ -1,6 +1,6 @@
 // backend/services/reductionPlanService.js
-const EmissionLog = require('../models/EmissionLog');
-const { breakdownToFourCategories } = require('../utils/categoryMapping');
+import EmissionLog from '../models/EmissionLog.js';
+import { breakdownToFourCategories } from '../utils/categoryMapping.js';
 
 async function getLast30CategoryTotals(userId) {
   const now = new Date();
@@ -65,7 +65,7 @@ function buildPlanFromTopCategories(topCats) {
   return plan;
 }
 
-async function buildReductionPlan(userId) {
+export async function buildReductionPlan(userId) {
   const { totals, total } = await getLast30CategoryTotals(userId);
   const entries = Object.entries(totals).sort((a, b) => b[1] - a[1]);
   const topCats = entries.slice(0, 2).map(([k]) => k); // focus on top 2
@@ -82,4 +82,3 @@ async function buildReductionPlan(userId) {
   };
 }
 
-module.exports = { buildReductionPlan };

@@ -1,9 +1,9 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const multer = require("multer");
-const User = require("../models/User");
-const auth = require("../middleware/auth");
+import express from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import multer from "multer";
+import User from "../models/User.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "myVerySecretKey123!";
@@ -230,4 +230,4 @@ router.delete("/goals/:index", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

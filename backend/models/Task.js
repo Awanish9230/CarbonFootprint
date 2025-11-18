@@ -1,5 +1,5 @@
 // models/Task.js
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const taskSchema = new mongoose.Schema({
   title: String,
@@ -7,4 +7,4 @@ const taskSchema = new mongoose.Schema({
   carbonReduction: Number,
 });
 
-module.exports = mongoose.model("Task", taskSchema);
+export default mongoose.model("Task", taskSchema);

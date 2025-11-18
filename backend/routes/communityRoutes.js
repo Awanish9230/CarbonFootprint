@@ -1,8 +1,8 @@
-const express = require('express');
-const Joi = require('joi');
-const auth = require('../middleware/auth');
-const validate = require('../middleware/validate');
-const CommunityPost = require('../models/CommunityPost');
+import express from 'express';
+import Joi from 'joi';
+import auth from '../middleware/auth.js';
+import validate from '../middleware/validate.js';
+import CommunityPost from '../models/CommunityPost.js';
 
 const router = express.Router();
 
@@ -76,4 +76,4 @@ router.delete('/posts/:id', auth, async (req, res) => {
   res.json({ message: 'Post deleted' });
 });
 
-module.exports = router;
+export default router;

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const commentSchema = new mongoose.Schema(
   {
@@ -19,4 +19,4 @@ const communityPostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('CommunityPost', communityPostSchema);
+export default mongoose.model('CommunityPost', communityPostSchema);

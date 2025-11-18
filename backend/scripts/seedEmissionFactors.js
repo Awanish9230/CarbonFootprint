@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const EmissionFactor = require('../models/EmissionFactor');
-const factors = require('../utils/emissionFactors');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import EmissionFactor from '../models/EmissionFactor.js';
+import factors from '../utils/emissionFactors.js';
 
 dotenv.config();
 

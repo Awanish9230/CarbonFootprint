@@ -1,6 +1,6 @@
 // backend/services/forecastService.js
-const EmissionLog = require('../models/EmissionLog');
-const { breakdownToFourCategories } = require('../utils/categoryMapping');
+import EmissionLog from '../models/EmissionLog.js';
+import { breakdownToFourCategories } from '../utils/categoryMapping.js';
 
 function toISODate(d) {
   const dt = new Date(d);
@@ -85,7 +85,7 @@ function forecastSeries(values = [], horizon = 7) {
   return { total: sum(daily), daily };
 }
 
-async function buildForecast(userId) {
+export async function buildForecast(userId) {
   const { series } = await getDailySeries(userId, 120);
   if (series.length === 0) {
     return {
@@ -181,4 +181,3 @@ async function buildForecast(userId) {
   return { forecast: { next7, next30 }, insights: insight };
 }
 
-module.exports = { buildForecast };
