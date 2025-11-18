@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 // const API_URL = "http://localhost:5000/api/auth";
-const API_URL = "https://ecotracker-backenddata.onrender.com";
+const API_URL = "https://ecotracker-backenddata.onrender.com/api/auth";
 
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
