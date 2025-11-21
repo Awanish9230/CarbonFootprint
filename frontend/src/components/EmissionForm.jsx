@@ -19,7 +19,7 @@ export default function EmissionForm({ onLogged }) {
     bus_km: '',
     cycle_km: '',
     // beef_kg: '',
-    meat_kg,
+    meat_kg: '',
     chicken_kg: '',
     vegetables_kg: ''
   });
