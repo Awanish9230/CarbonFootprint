@@ -10,7 +10,7 @@ const factors = [
   { name: 'rail_km', category: 'transport', unit: 'km', factor: 0.041 },
   { name: 'bus_km', category: 'transport', unit: 'km', factor: 0.105 },
   { name: 'cycle_km', category: 'transport', unit: 'km', factor: 0.0 },
-  { name: 'beef_kg', category: 'food', unit: 'kg', factor: 27.0 },
+  { name: 'meat_kg', category: 'food', unit: 'kg', factor: 27.0 },
   { name: 'chicken_kg', category: 'food', unit: 'kg', factor: 6.9 },
   { name: 'vegetables_kg', category: 'food', unit: 'kg', factor: 2.0 },
 

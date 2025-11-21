@@ -11,7 +11,7 @@ const breakdownSchema = new mongoose.Schema(
     rail_km: { type : Number, default: 0 },
     bus_km: { type: Number, default: 0 },
     cycle_km: { type: Number, default: 0 },
-    beef_kg: { type: Number, default: 0 },
+    meat_kg: { type: Number, default: 0 },
     chicken_kg: { type: Number, default: 0 },
     vegetables_kg: { type: Number, default: 0 },
     flights_km: { type: Number, default: 0 },
