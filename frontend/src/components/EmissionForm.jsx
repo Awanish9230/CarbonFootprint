@@ -111,7 +111,7 @@ export default function EmissionForm({ onLogged }) {
         <input type="number" placeholder="LPG (kg)" name="lpg_kg" value={form.lpg_kg} onChange={onChange} className={inputClass} />
 
         {/* Food */}
-        <input type="number" placeholder="Beef (kg)" name="beef_kg" value={form.beef_kg} onChange={onChange} className={inputClass} />
+        <input type="number" placeholder="Meat (kg)" name="beef_kg" value={form.beef_kg} onChange={onChange} className={inputClass} />
         <input type="number" placeholder="Chicken (kg)" name="chicken_kg" value={form.chicken_kg} onChange={onChange} className={inputClass} />
         <input type="number" placeholder="Vegetables (kg)" name="vegetables_kg" value={form.vegetables_kg} onChange={onChange} className={inputClass} />
         <input type="number" placeholder="Food (kgCO₂e)" name="food_kgco2e" value={form.food_kgco2e} onChange={onChange} className={inputClass} />
