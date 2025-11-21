@@ -22,7 +22,7 @@ function computeFromInput(input = {}) {
     rail_km: Number(input.rail_km ?? input.railKm ?? 0),
     bus_km: Number(input.bus_km ?? input.busKm ?? 0),
     cycle_km: Number(input.cycle_km ?? input.cycleKm ?? 0),
-    meat_kg: Number(input.meat_kg ?? input.maetKg ?? 0),
+    meat_kg: Number(input.meat_kg ?? input.meatKg ?? 0),
     chicken_kg: Number(input.chicken_kg ?? input.chickenKg ?? 0),
     vegetables_kg: Number(input.vegetables_kg ?? input.vegetablesKg ?? 0),
     other: Number(input.other ?? 0),
