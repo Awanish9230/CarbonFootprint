@@ -17,7 +17,6 @@ const breakdownSchema = new mongoose.Schema(
     flights_km: { type: Number, default: 0 },
     water_liters: { type: Number, default: 0 },
     waste_kg: { type: Number, default: 0 },
-    // optional “other” if you want to allow extras
     other: { type: Number, default: 0 },
   },
   { _id: false }

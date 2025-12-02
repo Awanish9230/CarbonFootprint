@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }) => {
   const [token, setTokenState] = useState(localStorage.getItem("token") || null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Configure axios auth header & persist token
   const setToken = (token) => {
     if (token) {
       localStorage.setItem("token", token);
@@ -28,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Fetch current logged-in user profile
+  // Fetch current logged-in user profile
   const fetchUser = async () => {
     try {
       const res = await axios.get(`${API_URL}/profile`);
@@ -36,10 +35,10 @@ export const AuthProvider = ({ children }) => {
 
       if (!u || !u._id) throw new Error("User ID not found");
 
-      // ✅ Save userId for gamification & dashboard
+      //Save userId for gamification & dashboard
       localStorage.setItem("userId", u._id);
 
-      // ✅ Safely define virtualGarden defaults
+      //Safely define virtualGarden defaults
       const vg = u.virtualGarden || {};
       const simplifiedUser = {
         _id: u._id,
@@ -74,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Run on mount or token change
+  //Run on mount or token change
   useEffect(() => {
     if (token) {
       setToken(token); // set axios header
@@ -84,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // ✅ Login
+  //Login
   const login = async (email, password) => {
     try {
       const res = await axios.post(`${API_URL}/login`, { email, password });
@@ -104,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Register
+  //Register
   const register = async ({ name, email, password, state }) => {
     try {
       const res = await axios.post(`${API_URL}/register`, {
@@ -129,7 +128,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Logout
+  //Logout
   const logout = () => {
     setUser(null);
     setToken(null);

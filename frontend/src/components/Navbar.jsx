@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 
 export default function Navbar() {
-  const { token, logout, user } = useAuth(); // user should have `name` property
+  const { token, logout, user } = useAuth(); 
   const navigate = useNavigate();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -63,7 +63,7 @@ export default function Navbar() {
               Login
             </Link>
           ) : (
-            // ✅ Avatar with dropdown
+            // Avatar with dropdown
             <div className="relative">
               <div
                 onClick={() => setDropdownOpen(!dropdownOpen)}

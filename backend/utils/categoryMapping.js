@@ -1,6 +1,4 @@
 // backend/utils/categoryMapping.js
-// Map fine-grained breakdown keys to 4 high-level categories used in analytics
-// transport, food, energy, waste
 
 export const CATEGORY_MAP = {
   transport: [

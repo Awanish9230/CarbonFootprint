@@ -1,7 +1,6 @@
 // utils/calculator.js
 import factorsList from './emissionFactors.js';
 
-// Create a map of emission factors for quick lookup
 const factorMap = factorsList.reduce((acc, f) => {
   acc[f.name] = f.factor;
   return acc;
@@ -9,7 +8,6 @@ const factorMap = factorsList.reduce((acc, f) => {
 
 // Compute emissions from input
 function computeFromInput(input = {}) {
-  // Map input keys safely (supports both camelCase and snake_case)
   const raw = {
     vehicle_km: Number(input.vehicle_km ?? input.vehicleKm ?? 0),
     electricity_kwh: Number(input.electricity_kwh ?? input.electricityKwh ?? 0),
@@ -28,13 +26,11 @@ function computeFromInput(input = {}) {
     other: Number(input.other ?? 0),
   };
 
-  // Compute breakdown using **snake_case keys only**
   const breakdown = {};
   for (const key in raw) {
     breakdown[key] = raw[key] * (factorMap[key] ?? 0);
   }
 
-  // Sum total CO2
   const totalCO2 = Object.values(breakdown).reduce((sum, val) => sum + val, 0);
 
   return { totalCO2, breakdown };

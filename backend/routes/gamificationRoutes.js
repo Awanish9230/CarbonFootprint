@@ -48,7 +48,7 @@ router.post("/log-action", async (req, res, next) => {
       console.log(`Found existing log with ${todayLog.actionsCompleted} actions`);
     }
 
-    // ✅ Limit: check if daily goal reached
+    //Limit: check if daily goal reached
     if (todayLog.actionsCompleted >= user.dailyGoal) {
       return res.status(400).json({ message: "Daily goal already reached!" });
     }

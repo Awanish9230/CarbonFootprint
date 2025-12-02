@@ -53,7 +53,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
-    }, 2000); // 2 seconds per image
+    }, 2000); 
     return () => clearInterval(interval);
   }, [images.length]);
 
@@ -76,7 +76,7 @@ export default function Home() {
               }}
             ></motion.div>
           ))}
-          <div className="absolute inset-0 bg-black/50"></div> {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/50"></div> 
         </div>
 
         {/* Hero Content */}

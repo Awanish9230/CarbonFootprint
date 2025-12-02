@@ -18,7 +18,7 @@ export default function Marketplace({ user, userId, refreshUser }) {
       refreshUser();
     } catch (err) {
       const msg = err.response?.data?.message || err.message;
-      setErrorMsg(msg); // show error message
+      setErrorMsg(msg); 
     } finally {
       setRedeemingItem(null);
     }

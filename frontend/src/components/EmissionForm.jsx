@@ -18,7 +18,6 @@ export default function EmissionForm({ onLogged }) {
     rail_km: '',
     bus_km: '',
     cycle_km: '',
-    // beef_kg: '',
     meat_kg: '',
     chicken_kg: '',
     vegetables_kg: ''
@@ -33,7 +32,7 @@ export default function EmissionForm({ onLogged }) {
     e.preventDefault();
     setLoading(true);
 
-    // ✅ Validation: prevent submission if all fields are empty
+    //Validation: prevent submission if all fields are empty
     const allEmpty = Object.values(form).every(v => v === '' || v === null);
     if (allEmpty) {
       toast.error('Please fill at least one field before submitting.', {
@@ -53,7 +52,7 @@ export default function EmissionForm({ onLogged }) {
       const res = await api.post('/emissions/log', payload);
       onLogged && onLogged(res.data);
 
-      // ✅ Show success toast
+      //Show success toast
       toast.success('Emissions logged successfully! Redirecting...', {
         position: "top-right",
         autoClose: 2000,
@@ -72,13 +71,11 @@ export default function EmissionForm({ onLogged }) {
         rail_km: '',
         bus_km: '',
         cycle_km: '',
-        // beef_kg: '',
         meat_kg: '',
         chicken_kg: '',
         vegetables_kg: ''
       });
 
-      // Redirect after 2 seconds
       setTimeout(() => navigate('/dashboard'), 2000);
 
     } catch (err) {

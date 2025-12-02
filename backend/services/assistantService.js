@@ -38,7 +38,6 @@ Answer in 2-4 sentences, reference specific numbers when helpful, and end with o
     const content = data.choices?.[0]?.message?.content?.trim?.();
     if (content) return content;
   } catch (e) {
-    // fallthrough
   }
 
   // Fallback: local concise answer

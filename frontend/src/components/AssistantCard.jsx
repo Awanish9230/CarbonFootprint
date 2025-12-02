@@ -10,7 +10,6 @@ export default function AssistantCard() {
     try {
       setLoading(true);
       const res = await askAssistant(q);
-      // res is plain text when using fetch directly; axios returns response.data
       setAnswer(typeof res === 'string' ? res : (res?.message || ''));
     } catch (e) {
       setAnswer('Sorry, I could not fetch an answer right now.');

@@ -185,7 +185,6 @@ export default function Profile() {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Left: compact dark card with preserved Save Changes dialog */}
         <motion.div
           className="col-span-1 bg-white dark:bg-gradient-to-b dark:from-gray-900 dark:to-gray-800 rounded-2xl p-6 shadow-2xl border border-blue-600/30"
           initial={{ opacity: 0, x: -10 }}
@@ -208,16 +207,6 @@ export default function Profile() {
   {/* hidden file input */}
   <input type="file" accept="image/*" onChange={handleImageUpload} className="sr-only" />
 
-  {/* Edit pill — positioned INSIDE avatar bottom-right */}
-  {/* <button
-    type="button"
-    onClick={() => document.querySelector('input[type="file"]').click()}
-    className="absolute right-0 bottom-0 -translate-x-1/4 translate-y-1/4 bg-emerald-500 text-white text-xs font-medium px-2 py-1 rounded-full ring-2 ring-white dark:ring-gray-900 shadow-lg hover:bg-emerald-600 transition"
-    aria-label="Edit profile photo"
-    title="Change profile photo"
-  >
-    Edit
-  </button> */}
 
 <button
   type="button"
@@ -243,8 +232,6 @@ export default function Profile() {
 </button>
 </label>
 
-
-            {/* Basic Info list like first image but compact */}
           
 <div className="w-full mt-6">
 
@@ -335,7 +322,6 @@ export default function Profile() {
                 </button>
               </div>
             </div>
-            {/* ---------- end dialog ---------- */}
 
           </div>
         </motion.div>

@@ -4,7 +4,7 @@ import { breakdownToFourCategories } from '../utils/categoryMapping.js';
 
 function toISODate(d) {
   const dt = new Date(d);
-  return dt.toISOString().slice(0, 10); // YYYY-MM-DD
+  return dt.toISOString().slice(0, 10); 
 }
 
 function linearRegression(y = []) {
@@ -75,7 +75,7 @@ function forecastSeries(values = [], horizon = 7) {
   const mean = sum(tail) / tail.length;
   const { slope } = linearRegression(tail);
   const last = values[values.length - 1];
-  const alpha = 0.6; // weight on trend
+  const alpha = 0.6; 
   const daily = [];
   for (let i = 1; i <= horizon; i++) {
     const trendPred = last + i * slope;

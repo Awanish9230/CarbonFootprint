@@ -24,14 +24,14 @@ export default function SearchBar({ query, setQuery, onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const trimmedQuery = query.trim(); // trim whitespace
+    const trimmedQuery = query.trim(); 
     setQuery(trimmedQuery);
     onSearch(trimmedQuery);
     setSuggestions([]);
   };
 
   const handleSelect = (suggestion) => {
-    const trimmedSuggestion = suggestion.trim(); // trim whitespace
+    const trimmedSuggestion = suggestion.trim(); 
     setQuery(trimmedSuggestion);
     onSearch(trimmedSuggestion);
     setSuggestions([]);

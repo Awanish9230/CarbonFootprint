@@ -60,7 +60,6 @@ export default function SkeletonLoader({ type = 'card', count = 1 }) {
     );
   }
 
-  // Default text skeleton
   return (
     <div className="space-y-3">
       {skeletons.map((_, i) => (

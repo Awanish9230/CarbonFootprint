@@ -97,12 +97,12 @@ router.post("/login", async (req, res) => {
 // ---------------------- PROFILE ----------------------
 router.get("/profile", auth, async (req, res) => {
   try {
-    // ✅ req.user is already populated by middleware
+    //req.user is already populated by middleware
     const user = req.user || (await User.findById(req.userId));
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // ✅ Return simplified but consistent user object
+    //Return simplified but consistent user object
     res.json({
       _id: user._id,
       name: user.name,

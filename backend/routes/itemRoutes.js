@@ -38,9 +38,9 @@ router.get("/suggestions", async (req, res) => {
   if (!q) return res.json([]);
 
   try {
-    q = escapeRegex(q); // escape special regex characters
-    const regex = new RegExp(q, "i"); // case-insensitive search
-    const items = await Item.find({ name: regex }).limit(10); // limit to 10 suggestions
+    q = escapeRegex(q); 
+    const regex = new RegExp(q, "i"); 
+    const items = await Item.find({ name: regex }).limit(10);
     const suggestions = items.map(item => item.name);
     res.json(suggestions);
   } catch (err) {

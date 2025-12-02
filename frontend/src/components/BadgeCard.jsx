@@ -7,7 +7,6 @@ export default function BadgeCard({ badge = {}, justUnlocked = false }) {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // avoid SSR warning by only showing confetti on client
     setIsClient(typeof window !== "undefined");
   }, []);
 
@@ -62,7 +61,6 @@ export default function BadgeCard({ badge = {}, justUnlocked = false }) {
           Achieved!
         </motion.div>
 
-        {/* Glow Effect */}
         <div className="absolute inset-0 rounded-3xl bg-yellow-200/20 dark:bg-yellow-600/30 blur-2xl animate-pulse pointer-events-none"></div>
       </motion.div>
     </div>

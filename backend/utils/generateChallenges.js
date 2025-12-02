@@ -80,7 +80,7 @@ export async function generateDailyChallenges(userId) {
     const hasTodayChallenge = user.challenges.some(
       (c) => c.startDate && c.startDate.toISOString().split("T")[0] === today && !c.completed
     );
-    if (hasTodayChallenge) return user; // Already has today's challenge
+    if (hasTodayChallenge) return user;
 
     // Filter out challenges done in last 7 days
     const sevenDaysAgo = new Date();
@@ -94,7 +94,6 @@ export async function generateDailyChallenges(userId) {
     let availableChallenges = challengePool.filter((c) => !recentTitles.has(c.title));
 
     if (availableChallenges.length < 2) {
-      // If less than 2 challenges available, reset pool
       availableChallenges = challengePool;
     }
 
@@ -110,7 +109,7 @@ export async function generateDailyChallenges(userId) {
 
       newChallenges.push({
         ...challenge,
-        badgeReward, // Always assigned
+        badgeReward, 
         startDate: new Date(),
         endDate: new Date(new Date().setDate(new Date().getDate() + 1)),
         completed: false,

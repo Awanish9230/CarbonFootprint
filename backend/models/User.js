@@ -23,10 +23,10 @@ const challengeSchema = new mongoose.Schema({
   startDate: { type: Date, default: Date.now },
   endDate: { type: Date },
   completed: { type: Boolean, default: false },
-  progress: { type: Number, default: 0 }, // 0-100%
-  pointsReward: { type: Number, default: 10 }, // points earned on completion
-  badgeReward: { type: String, default: "" },  // optional badge unlocked
-  carbonReduction: { type: Number, default: 0 } // kg CO₂ reduced on completion
+  progress: { type: Number, default: 0 },
+  pointsReward: { type: Number, default: 10 }, 
+  badgeReward: { type: String, default: "" },  
+  carbonReduction: { type: Number, default: 0 } 
 });
 
 // Badge schema
@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema({
   points: { type: Number, default: 0 },
   level: { type: Number, default: 1 },
   streak: { type: Number, default: 0 },
-  lastStreakDate: { type: Date, default: null }, // <--- NEW: Tracks last streak update
+  lastStreakDate: { type: Date, default: null },
   dailyGoal: { type: Number, default: 2 },
   dailyLogs: { type: [dailyLogSchema], default: [] },
 
@@ -77,7 +77,7 @@ const userSchema = new mongoose.Schema({
   virtualGarden: {
     treesPlanted: { type: Number, default: 0 },
     gardenLevel: { type: Number, default: 1 },
-    carbonSaved: { type: Number, default: 0 } // optional, synced with main carbonSaved
+    carbonSaved: { type: Number, default: 0 } 
   },
 
   // Carbon Savings

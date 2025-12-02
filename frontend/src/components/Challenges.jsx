@@ -12,7 +12,7 @@ export default function Challenges({ user, userId, refreshUser }) {
         userId,
         challengeId,
       });
-      refreshUser(); // Refresh user data after completion
+      refreshUser();
     } catch (err) {
       console.error("Error completing challenge:", err.response?.data || err.message);
     } finally {

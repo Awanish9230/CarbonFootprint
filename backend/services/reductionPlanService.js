@@ -68,7 +68,7 @@ function buildPlanFromTopCategories(topCats) {
 export async function buildReductionPlan(userId) {
   const { totals, total } = await getLast30CategoryTotals(userId);
   const entries = Object.entries(totals).sort((a, b) => b[1] - a[1]);
-  const topCats = entries.slice(0, 2).map(([k]) => k); // focus on top 2
+  const topCats = entries.slice(0, 2).map(([k]) => k); 
   const plan = buildPlanFromTopCategories(topCats);
 
   return {

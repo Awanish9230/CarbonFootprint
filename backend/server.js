@@ -10,11 +10,10 @@ import authRoutes from "./routes/authRoutes.js";
 import emissionRoutes from "./routes/emissionRoutes.js";
 import leaderboardRoutes from "./routes/leaderboardRoutes.js";
 import communityRoutes from "./routes/communityRoutes.js";
-import gamificationRoutes from "./routes/gamificationRoutes.js"; // <-- New
+import gamificationRoutes from "./routes/gamificationRoutes.js"; 
 import insightRoutes from "./routes/insightRoutes.js";
 import User from "./models/User.js";
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
@@ -32,7 +31,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/emissions", emissionRoutes);
 app.use("/api/leaderboard", leaderboardRoutes);
 app.use("/api/community", communityRoutes);
-app.use("/api/gamification", gamificationRoutes); // <-- Use gamification routes
+app.use("/api/gamification", gamificationRoutes); 
 app.use("/api/insights", insightRoutes);
 
 // Health check route

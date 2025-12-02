@@ -87,7 +87,7 @@ export async function buildBenchmark(user) {
   };
   const cluster = clusterFromShares(userShares);
   const totalsList = peers.totalsPerUser.map((r) => r.total);
-  const percentile = percentileRank(u.total, totalsList); // higher percentile => higher emissions among peers
+  const percentile = percentileRank(u.total, totalsList);
 
   // Compare categories
   const catComparison = {};
@@ -111,7 +111,7 @@ export async function buildBenchmark(user) {
       scope: 'state',
       state: user.state || null,
       avg_by_category: Object.fromEntries(Object.entries(peers.avgByCat).map(([k, v]) => [k, Number(v.toFixed(2))])),
-      percentile: percentile, // e.g., 25 => Top 25% eco-efficient (lower is better if we invert)
+      percentile: percentile, 
     },
     highlight: worseCat,
     summary: `You are in the "${cluster}" group. Your 30-day total is at the ${percentile}th percentile among similar users. ${worseCat ? `Your ${worseCat} emissions are higher than peers.` : ''}`.trim(),

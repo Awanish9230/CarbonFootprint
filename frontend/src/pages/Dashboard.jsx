@@ -48,11 +48,9 @@ export default function Dashboard({ refreshKey = 0, newLog = null }) {
     }
   };
 
-  // Fetch on mount / range / refreshKey change
   useEffect(() => {
     fetchSummary();
     fetchRecommendations();
-    // insights
     (async () => {
       try {
         setLoadingInsights((s) => ({ ...s, forecast: true }));
@@ -84,7 +82,6 @@ export default function Dashboard({ refreshKey = 0, newLog = null }) {
     })();
   }, [range, refreshKey]);
 
-  // Update summary reactively when a new log is added
   useEffect(() => {
     if (newLog && summary) {
       const updatedEntries = [...summary.entries, newLog];
@@ -109,25 +106,6 @@ export default function Dashboard({ refreshKey = 0, newLog = null }) {
       });
     }
   }, [newLog]);
-
-  // Calculate totals for each range
-  // const calculateTotals = (entries) => {
-  //   const totals = { daily: 0, weekly: 0, monthly: 0, yearly: 0 };
-  //   if (!entries || entries.length === 0) return totals;
-
-  //   const now = new Date();
-  //   entries.forEach((entry) => {
-  //     const date = new Date(entry.date);
-  //     const diffDays = (now - date) / (1000 * 60 * 60 * 24);
-
-  //     if (diffDays <= 1) totals.daily += Number(entry.totalCO2) || 0;
-  //     if (diffDays <= 7) totals.weekly += Number(entry.totalCO2) || 0;
-  //     if (diffDays <= 30) totals.monthly += Number(entry.totalCO2) || 0;
-  //     if (diffDays <= 365) totals.yearly += Number(entry.totalCO2) || 0;
-  //   });
-
-  //   return totals;
-  // };
 
   const calculateTotals = (entries) => {
     const totals = { daily: 0, weekly: 0, monthly: 0, yearly: 0 };

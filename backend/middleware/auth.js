@@ -15,8 +15,7 @@ export default async function auth(req, res, next) {
     const user = await User.findById(decoded.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // ✅ Consistently attach both forms
-    req.user = user; // entire user document
+    req.user = user; 
     req.userId = user._id;
 
     next();
