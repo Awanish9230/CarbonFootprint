@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const emissionFactorSchema = new mongoose.Schema(
   {
@@ -10,4 +11,7 @@ const emissionFactorSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('EmissionFactor', emissionFactorSchema);
+// module.exports = mongoose.model('EmissionFactor', emissionFactorSchema);
+const EmissionFactor = mongoose.model("EmissionFactor", emissionFactorSchema);
+
+export default EmissionFactor;

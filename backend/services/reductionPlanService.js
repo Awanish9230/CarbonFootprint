@@ -1,6 +1,8 @@
 // backend/services/reductionPlanService.js
-const EmissionLog = require('../models/EmissionLog');
-const { breakdownToFourCategories } = require('../utils/categoryMapping');
+// const EmissionLog = require('../models/EmissionLog');
+// const { breakdownToFourCategories } = require('../utils/categoryMapping');
+import EmissionLog from "../models/EmissionLog.js";
+import { breakdownToFourCategories } from "../utils/categoryMapping.js";
 
 async function getLast30CategoryTotals(userId) {
   const now = new Date();
@@ -82,4 +84,5 @@ async function buildReductionPlan(userId) {
   };
 }
 
-module.exports = { buildReductionPlan };
+// module.exports = { buildReductionPlan };
+export { buildReductionPlan };

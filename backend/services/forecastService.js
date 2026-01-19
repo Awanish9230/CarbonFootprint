@@ -1,6 +1,8 @@
 // backend/services/forecastService.js
-const EmissionLog = require('../models/EmissionLog');
-const { breakdownToFourCategories } = require('../utils/categoryMapping');
+// const EmissionLog = require('../models/EmissionLog');
+// const { breakdownToFourCategories } = require('../utils/categoryMapping');
+import EmissionLog from "../models/EmissionLog.js";
+import { breakdownToFourCategories } from "../utils/categoryMapping.js";
 
 function toISODate(d) {
   const dt = new Date(d);
@@ -181,4 +183,5 @@ async function buildForecast(userId) {
   return { forecast: { next7, next30 }, insights: insight };
 }
 
-module.exports = { buildForecast };
+// module.exports = { buildForecast };
+export { buildForecast };

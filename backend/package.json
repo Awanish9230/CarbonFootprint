@@ -2,6 +2,7 @@
   "name": "carbon-footprint-tracker-backend",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "main": "server.js",
   "license": "MIT",
   "scripts": {

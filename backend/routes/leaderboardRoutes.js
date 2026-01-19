@@ -1,6 +1,10 @@
-const express = require('express');
-const User = require('../models/User');
-const EmissionLog = require('../models/EmissionLog');
+// const express = require('express');
+// const User = require('../models/User');
+// const EmissionLog = require('../models/EmissionLog');
+
+import express from "express";
+import User from "../models/User.js";
+import EmissionLog from "../models/EmissionLog.js";
 
 const router = express.Router();
 
@@ -40,4 +44,5 @@ router.get('/state/:state', async (req, res) => {
   res.json({ scope: 'state', state: stateParam, from: start, to: now, results });
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

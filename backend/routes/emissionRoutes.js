@@ -1,11 +1,19 @@
 // backend/routes/emissionRoutes.js
-const express = require('express');
-const Joi = require('joi');
-const auth = require('../middleware/auth');
-const validate = require('../middleware/validate');
-const EmissionLog = require('../models/EmissionLog');
-const { computeFromInput } = require('../utils/calculator');
-const { getRecommendationsWithGemini } = require('../services/recommendationService');
+// const express = require('express');
+// const Joi = require('joi');
+// const auth = require('../middleware/auth');
+// const validate = require('../middleware/validate');
+// const EmissionLog = require('../models/EmissionLog');
+// const { computeFromInput } = require('../utils/calculator');
+// const { getRecommendationsWithGemini } = require('../services/recommendationService');
+
+import express from "express";
+import Joi from "joi";
+import auth from "../middleware/auth.js";
+import validate from "../middleware/validate.js";
+import EmissionLog from "../models/EmissionLog.js";
+import { computeFromInput } from "../utils/calculator.js";
+import { getRecommendationsWithGemini } from "../services/recommendationService.js";
 
 const router = express.Router();
 
@@ -147,4 +155,6 @@ router.get('/recommendations', auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;
+

@@ -1,11 +1,19 @@
 // backend/routes/insightRoutes.js
-const express = require('express');
-const auth = require('../middleware/auth');
-const EmissionLog = require('../models/EmissionLog');
-const { buildForecast } = require('../services/forecastService');
-const { buildReductionPlan } = require('../services/reductionPlanService');
-const { buildBenchmark } = require('../services/benchmarkService');
-const { generateAssistantReply } = require('../services/assistantService');
+// const express = require('express');
+// const auth = require('../middleware/auth');
+// const EmissionLog = require('../models/EmissionLog');
+// const { buildForecast } = require('../services/forecastService');
+// const { buildReductionPlan } = require('../services/reductionPlanService');
+// const { buildBenchmark } = require('../services/benchmarkService');
+// const { generateAssistantReply } = require('../services/assistantService');
+
+import express from "express";
+import auth from "../middleware/auth.js";
+import EmissionLog from "../models/EmissionLog.js";
+import { buildForecast } from "../services/forecastService.js";
+import { buildReductionPlan } from "../services/reductionPlanService.js";
+import { buildBenchmark } from "../services/benchmarkService.js";
+import { generateAssistantReply } from "../services/assistantService.js";
 
 const router = express.Router();
 
@@ -82,4 +90,5 @@ router.post('/assistant', auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+// module.exports = router;
+export default router;

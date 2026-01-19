@@ -70,7 +70,10 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) application designed to 
 *   **Other:**
     *   dotenv ⚙️
     *   Nodemon 🔄
-## 🚀 Installation
+    *   Google Gemini API 🤖
+    *   Docker 🐳
+    *   Docker Compose 
+## 🚀 Installation Option 1
 
 ### Prerequisites
 
@@ -148,6 +151,45 @@ A full-stack MERN (MongoDB, Express.js, React, Node.js) application designed to 
 *   **View** your carbon footprint trends and personalized recommendations on the dashboard.
 *   **Participate** in community challenges and earn badges.
 *   **Redeem** points in the marketplace for eco-friendly rewards.
+
+## 🚀 Installation Option 2 — Run with Docker(Recommended)
+
+### Prerequisites
+
+*  Docker 🐳
+*  Docker Compose 📦
+No need to install Node.js or MongoDB manually. Everything runs inside containers.
+
+###  Using Docker Setup
+1.  Clone the repository:
+    ```bash
+       git clone https://github.com/Awanish9230/CarbonFootprint.git
+       cd CarbonFootprint
+2.  Create a `.env` file in the root directory and set the following environment variables:
+    ```
+    GEMINI_API_KEY=your_gemini_api_key_here
+    MONGO_URI=mongodb://mongo:27017/carbonfootprint
+    JWT_SECRET=your_long_random_secret
+    PORT=5000
+    ```
+3.  Build and start the containers using Docker Compose:
+    ```bash
+    docker-compose up --build
+
+4. Access the application:
+    Frontend → http://localhost:3000  
+    Backend  → http://localhost:5000  
+    MongoDB  → Running inside Docker container
+
+5.  To stop the containers, run:
+    ```bash
+    docker-compose down
+    ```
+ 
+💡Notes
+The first build may take a few minutes.
+* All backend, frontend, and database services run in isolated containers.
+* Works identically on Windows, Linux, and macOS.
 
 ## ⚙️ Project Structure
 

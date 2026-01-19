@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const badgeSchema = new mongoose.Schema(
   {
@@ -18,4 +19,7 @@ const badgeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Badge', badgeSchema);
+// module.exports = mongoose.model('Badge', badgeSchema);
+const Badge = mongoose.model("Badge", badgeSchema);
+
+export default Badge;

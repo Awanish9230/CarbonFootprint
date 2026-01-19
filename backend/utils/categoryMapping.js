@@ -36,4 +36,5 @@ function breakdownToFourCategories(breakdown = {}) {
   return result;
 }
 
-module.exports = { CATEGORY_MAP, breakdownToFourCategories };
+// module.exports = { CATEGORY_MAP, breakdownToFourCategories };
+export { CATEGORY_MAP, breakdownToFourCategories };

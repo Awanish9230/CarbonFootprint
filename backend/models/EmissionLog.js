@@ -1,5 +1,6 @@
 // emissionLog.js
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const breakdownSchema = new mongoose.Schema(
   {
@@ -33,4 +34,7 @@ const emissionLogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('EmissionLog', emissionLogSchema);
+// module.exports = mongoose.model('EmissionLog', emissionLogSchema);
+const EmissionLog = mongoose.model("EmissionLog", emissionLogSchema);
+
+export default EmissionLog;

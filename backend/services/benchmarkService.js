@@ -1,7 +1,11 @@
 // backend/services/benchmarkService.js
-const EmissionLog = require('../models/EmissionLog');
-const User = require('../models/User');
-const { breakdownToFourCategories } = require('../utils/categoryMapping');
+// const EmissionLog = require('../models/EmissionLog');
+// const User = require('../models/User');
+// const { breakdownToFourCategories } = require('../utils/categoryMapping');
+import EmissionLog from "../models/EmissionLog.js";
+import User from "../models/User.js";
+import { breakdownToFourCategories } from "../utils/categoryMapping.js";
+
 
 function sum(o) { return Object.values(o).reduce((a, b) => a + b, 0); }
 
@@ -118,4 +122,5 @@ async function buildBenchmark(user) {
   };
 }
 
-module.exports = { buildBenchmark };
+// module.exports = { buildBenchmark };
+export { buildBenchmark };

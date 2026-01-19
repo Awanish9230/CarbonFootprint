@@ -1,5 +1,8 @@
-require('dotenv').config();
-const fetch = require('node-fetch');
+// require('dotenv').config();
+// const fetch = require('node-fetch');
+import 'dotenv/config';
+import fetch from "node-fetch";
+
 
 async function getRecommendationsWithGemini(summary = {}) {
   const ruleRecs = [];
@@ -129,4 +132,5 @@ Generate 3 actionable and personalized recommendations to help reduce their CO2 
   };
 }
 
-module.exports = { getRecommendationsWithGemini };
+// module.exports = { getRecommendationsWithGemini };
+export { getRecommendationsWithGemini };

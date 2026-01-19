@@ -1,6 +1,10 @@
 // backend/services/assistantService.js
-require('dotenv').config();
-const fetch = require('node-fetch');
+// require('dotenv').config();
+// const fetch = require('node-fetch');
+import dotenv from "dotenv";
+import fetch from "node-fetch";
+
+dotenv.config();
 
 async function generateAssistantReply({ history30d, forecast, plan, benchmark, question }) {
   const sys = 'You are a friendly, concise sustainability assistant. Use the provided numbers exactly and give one actionable tip.';
@@ -46,4 +50,5 @@ Answer in 2-4 sentences, reference specific numbers when helpful, and end with o
   return `Based on your recent data, your next-7-day forecast is ${forecast?.next7?.total?.toFixed?.(1) ?? '?'} kg CO₂. ${benchmark?.highlight ? `Your ${benchmark.highlight} is higher than peers—` : ''}focus on it first. Try this: ${tip}.`;
 }
 
-module.exports = { generateAssistantReply };
+// module.exports = { generateAssistantReply };
+export { generateAssistantReply };
