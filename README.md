@@ -174,7 +174,7 @@ No need to install Node.js or MongoDB manually. Everything runs inside container
     ```
 3.  Build and start the containers using Docker Compose:
     ```bash
-    docker-compose up --build
+    docker compose up --build
 
 4. Access the application:
     Frontend → http://localhost:3000  
@@ -183,7 +183,7 @@ No need to install Node.js or MongoDB manually. Everything runs inside container
 
 5.  To stop the containers, run:
     ```bash
-    docker-compose down
+    docker compose down
     ```
  
 💡Notes
